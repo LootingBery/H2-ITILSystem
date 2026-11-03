@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Skak Systems | Ticket service",
+  title: "Skak Systems",
   description: "Create and manage tickets for IT support and services.",
 };
 

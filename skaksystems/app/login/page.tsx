@@ -4,18 +4,25 @@ import React from "react";
 function page() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="rounded-lg bg-blue-500 text-white p-10 flex flex-col gap-4">
-        <h1 className="bg-blue-500 text-white rounded-lg text-center text-xl font-bold p-2">
+      <div className="rounded-lg bg-gray-600/80 text-white p-10 flex flex-col gap-1">
+        <h1 className=" text-white rounded-lg text-center text-xl font-bold p-2">
           Login
         </h1>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="username" className="text-lg font-medium">
+          Username:
+        </label>
         <input
+          id="username"
           type="text"
           name="username"
           className="border border-black bg-blue-200 text-black rounded-md p-2"
         />
-        <label htmlFor="password">Password:</label>
+        <br></br>
+        <label htmlFor="password" className="text-lg font-medium">
+          Password:
+        </label>
         <input
+          id="password"
           type="password"
           name="password"
           className="border border-black bg-blue-200 text-black rounded-md p-2"
