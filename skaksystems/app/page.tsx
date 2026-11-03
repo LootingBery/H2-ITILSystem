@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center font-sans text-white">
+    <main className="flex flex-col flex-1 items-center justify-center font-sans text-white">
       <div className="flex flex-col bg-gray-600/80 max-w-2xl w-full h-120 rounded-md">
         <form className="justify-center flex flex-col gap-4 p-4">
           <label htmlFor="title" className="text-xl font-bold">
@@ -67,16 +67,16 @@ export default function Home() {
             />
           </label>
 
-          <div className="flex justify-center mt-3">
+          <div className="flex justify-center mt-2">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Submit
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
