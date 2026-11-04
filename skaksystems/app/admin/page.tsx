@@ -40,10 +40,11 @@ function page() {
             <ChessPawn size={15} className="text-blue-400" /> hallo Pawn
           </a>
           <a
-            href="#"
+            href="/admin/documentation"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessRook size={15} className="text-blue-400" /> hallo Rook
+            <ChessRook size={15} className="text-blue-400" /> hallo
+            Documentation
           </a>
           <a
             href="#"
