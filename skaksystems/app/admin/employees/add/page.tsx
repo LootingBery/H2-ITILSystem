@@ -1,35 +1,34 @@
-import { query } from "@/app/db";
-import bcrypt from "bcrypt";
-import { revalidatePath } from "next/cache";
+"use client";
+import { createEmployee } from "@/app/actions";
+import { useState } from "react";
 
-function page() {
-  async function createemployee(formData: FormData) {
-    "use server";
+function AddEmployeePage() {
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error">(
+    "success",
+  );
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-    const Forename = formData.get("Forename")?.toString();
-    const Surname = formData.get("Surname")?.toString();
-    const Level = formData.get("Level")?.toString();
-    const Password = formData.get("Password")?.toString();
+    try {
+      const form = e.currentTarget;
+      const formData = new FormData(form);
 
-    if (!Forename || !Surname || !Level || !Password) {
-      throw new Error("All employee fields are required");
+      await createEmployee(formData);
+
+      setMessage("Employee created successfully!");
+      form.reset();
+    } catch (error) {
+      console.error("Error creating employee:", error);
+      setMessage("Error creating employee. Please try again later.");
+      setMessageType("error");
     }
-
-    const hashedPassword = await bcrypt.hash(Password, 10);
-
-    await query(
-      "INSERT INTO Employees (Forename, Surname, Level, Password) VALUES (?, ?, ?, ?)",
-      [Forename, Surname, Level, hashedPassword],
-    );
-
-    revalidatePath("/admin/employees");
   }
-
   return (
     <main>
       <div className="p-4 text-white bg-slate-900 min-h-screen">
         <div className="mb-4 flex flex-row justify-between items-center">
-          <h1 className="text-2xl font-bold">Employees</h1>
+          <h1 className="text-2xl font-bold">Add Employee</h1>
           <a
             href="/admin/employees"
             className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
@@ -41,7 +40,7 @@ function page() {
         <div className="flex flex-col flex-1 items-center justify-center font-sans text-white">
           <div className="flex flex-col bg-gray-600/80 max-w-2xl w-full h-max rounded-md">
             <form
-              action={createemployee}
+              onSubmit={handleSubmit}
               className="justify-center flex flex-col gap-4 p-4"
             >
               <label htmlFor="Forename" className="text-xl font-bold">
@@ -96,6 +95,17 @@ function page() {
                   Submit
                 </button>
               </div>
+              {message && (
+                <div
+                  className={`text-sm text-center ${
+                    messageType === "success"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {message}
+                </div>
+              )}
             </form>
           </div>
         </div>
@@ -104,4 +114,4 @@ function page() {
   );
 }
 
-export default page;
+export default AddEmployeePage;

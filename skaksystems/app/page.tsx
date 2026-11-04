@@ -57,7 +57,7 @@ export default function Home() {
             />
           </label>
           <div className="flex flex-row gap-4">
-            <label htmlFor="Forname" className="text-xl font-bold flex-1">
+            <label htmlFor="Forname" className="text-md font-bold flex-1">
               Name:
               <input
                 type="text"
@@ -67,7 +67,7 @@ export default function Home() {
                 className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
               />
             </label>
-            <label htmlFor="Phone" className="text-xl font-bold flex-1">
+            <label htmlFor="Phone" className="text-md font-bold flex-1">
               Phone:
               <input
                 type="text"
@@ -77,7 +77,7 @@ export default function Home() {
               />
             </label>
           </div>
-          <label htmlFor="Mail" className="text-xl font-bold">
+          <label htmlFor="Mail" className="text-md font-bold">
             Mail:
             <input
               type="text"
