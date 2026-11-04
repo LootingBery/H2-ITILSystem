@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { query } from "@/app/db";
 import {
   ChessRook,
   ChessBishop,
