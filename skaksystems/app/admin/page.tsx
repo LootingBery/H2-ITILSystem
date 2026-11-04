@@ -53,10 +53,10 @@ function page() {
             <ChessKnight size={15} className="text-blue-400" /> hallo Knight
           </a>
           <a
-            href="#"
+            href="/admin/tickets"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653]  text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessBishop size={15} className="text-blue-400" /> hallo Bishop
+            <ChessBishop size={15} className="text-blue-400" /> hallo Tickets
           </a>
           <a
             href="#"
