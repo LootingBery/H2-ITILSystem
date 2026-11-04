@@ -65,10 +65,10 @@ function page() {
             <ChessQueen size={15} className="text-blue-400" /> hallo Queen
           </a>
           <a
-            href="#"
+            href="/admin/employees"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessKing size={15} className="text-blue-400" /> hallo King
+            <ChessKing size={15} className="text-blue-400" /> hallo Employees
           </a>
         </nav>
       </aside>
