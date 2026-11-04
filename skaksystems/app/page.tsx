@@ -1,36 +1,46 @@
-import { query } from "@/app/db";
-import { revalidatePath } from "next/cache";
+"use client";
+
+import React, { useState } from "react";
+import { createTicket } from "@/app/actions";
 
 export default function Home() {
-  async function createTicket(formData: FormData) {
-    "use server";
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error">(
+    "success",
+  );
 
-    const Title = formData.get("Title");
-    const Description = formData.get("Description");
-    const Forname = formData.get("Forname");
-    const Mail = formData.get("Mail");
-    const Phone = formData.get("Phone");
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setMessage("Submitting...");
+    setMessageType("success");
 
-    await query(
-      "INSERT INTO Tickets (Title, Description, Forname, Mail, Phone) VALUES (?, ?, ?, ?, ?)",
-      [Title, Description, Forname, Mail, Phone],
-    );
+    try {
+      const form = e.currentTarget;
+      const formData = new FormData(form);
 
-    revalidatePath("/");
+      await createTicket(formData);
+
+      setMessage("Ticket submitted successfully!");
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting ticket:", error);
+      setMessage("Error submitting ticket. Please try again later.");
+      setMessageType("error");
+    }
   }
 
   return (
     <main className="flex flex-col flex-1 items-center justify-center font-sans text-white">
       <div className="flex flex-col bg-gray-600/80 max-w-2xl w-full h-max rounded-md">
         <form
-          action={createTicket}
+          onSubmit={handleSubmit}
           className="justify-center flex flex-col gap-4 p-4"
         >
           <label htmlFor="Title" className="text-xl font-bold">
             Title:
             <input
               type="text"
-              id="  "
+              id="Title"
               name="Title"
               required
               className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
@@ -46,8 +56,8 @@ export default function Home() {
               className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
             />
           </label>
-          <div className="flex flex-row gap-45">
-            <label htmlFor="Forname" className="text-xl font-bold">
+          <div className="flex flex-row gap-4">
+            <label htmlFor="Forname" className="text-xl font-bold flex-1">
               Name:
               <input
                 type="text"
@@ -57,7 +67,7 @@ export default function Home() {
                 className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
               />
             </label>
-            <label htmlFor="Phone" className="text-xl font-bold">
+            <label htmlFor="Phone" className="text-xl font-bold flex-1">
               Phone:
               <input
                 type="text"
@@ -78,13 +88,22 @@ export default function Home() {
             />
           </label>
 
-          <div className="flex justify-center mt-2">
+          <div className="flex justify-center items-center mt-2 flex-col">
             <button
               type="submit"
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Submit
             </button>
+            {message && (
+              <p
+                className={`text-center font-bold ${
+                  messageType === "success" ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {message}
+              </p>
+            )}
           </div>
         </form>
       </div>
