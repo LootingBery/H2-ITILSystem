@@ -26,8 +26,6 @@ async function EmployeesList() {
           </p>
 
           <p className="text-sm text-slate-400">{employee.Level}</p>
-
-          <p className="text-sm text-slate-400">{employee.Password}</p>
         </div>
       ))}
     </div>
