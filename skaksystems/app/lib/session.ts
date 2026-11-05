@@ -2,6 +2,7 @@ import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
 interface EmployeeSession {
+  maxAge: number;
   employeeId: number;
   level: string;
 }
@@ -24,6 +25,7 @@ export async function getSession(): Promise<EmployeeSession | null> {
 
     return {
       employeeId: payload.employeeId as number,
+      maxAge: payload.maxAge as number,
       level: payload.level as string,
     };
   } catch {

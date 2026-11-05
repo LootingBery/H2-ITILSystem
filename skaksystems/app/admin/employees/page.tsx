@@ -2,6 +2,7 @@ import { query } from "@/app/db";
 import { Suspense } from "react";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import { pool } from "@/app/db";
 
 interface Employees {
   ID: number;
@@ -45,6 +46,18 @@ async function EmployeesList() {
 export const instant = false;
 export default async function Page() {
   const session = await getSession();
+  let level = "";
+
+  if (session) {
+    const [rows] = await pool.execute(
+      "SELECT Level FROM Employees WHERE ID = ?",
+      [session.employeeId],
+    );
+
+    const Level = rows as { Level: string }[];
+
+    level = Level[0]?.Level ?? "";
+  }
 
   if (!session) {
     redirect("/login");
@@ -55,12 +68,14 @@ export default async function Page() {
         <div className=" relative mb-4 flex flex-row items-center">
           <h1 className="text-2xl font-bold">Employees</h1>
           <div className="absolute right-0 flex gap-2">
-            <a
-              href="/admin/employees/add"
-              className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
-            >
-              Add Employee
-            </a>
+            {Number(level) >= 3 && (
+              <a
+                href="/admin/employees/add"
+                className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
+              >
+                Add Employee
+              </a>
+            )}
             <a
               href="/admin"
               className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"

@@ -1,5 +1,6 @@
 import { pool } from "@/app/db";
 import { NextRequest, NextResponse } from "next/server";
+import { getSession } from "@/app/lib/session";
 
 interface Ticket {
   ID: number;
@@ -15,6 +16,15 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
+
+  const session = await getSession();
+
+  if (!session) {
+    return NextResponse.json(
+      { error: "You must be logged in" },
+      { status: 401 },
+    );
+  }
 
   const body = await request.json();
 
@@ -42,7 +52,9 @@ export async function POST(
     await connection.beginTransaction();
 
     await connection.execute(
-      "INSERT INTO ClosedTickets (ID, Title, Description, Forename, Mail, Phone, SolvedDescription) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      `INSERT INTO ClosedTickets
+      (ID, Title, Description, Forename, Mail, Phone, SolvedDescription, ClosedBy, ClosedAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`,
       [
         ticket.ID,
         ticket.Title,
@@ -51,6 +63,7 @@ export async function POST(
         ticket.Mail,
         ticket.Phone,
         SolvedDescription,
+        session.employeeId,
       ],
     );
     await connection.execute("DELETE FROM Tickets WHERE ID = ?", [ticket.ID]);

@@ -1,13 +1,29 @@
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import { pool } from "@/app/db";
 import AddEmployeeForm from "./AddEmployeeForm";
 
 export const instant = false;
 export default async function AddEmployeePage() {
   const session = await getSession();
+  let level = "";
+
+  if (session) {
+    const [rows] = await pool.execute(
+      "SELECT Level FROM Employees WHERE ID = ?",
+      [session.employeeId],
+    );
+
+    const Level = rows as { Level: string }[];
+
+    level = Level[0]?.Level ?? "";
+  }
 
   if (!session) {
     redirect("/login");
+  }
+  if (Number(level) < 3) {
+    redirect("/admin/employees");
   }
 
   return (

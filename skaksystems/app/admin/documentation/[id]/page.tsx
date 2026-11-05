@@ -13,9 +13,10 @@ interface ClosedTickets {
   Surname: string;
   Mail: string;
   Phone: string;
-  ClosedBy: string;
   SolvedDescription: string;
-  ClosedDate: string;
+  ClosedByForename: string;
+  ClosedBySurname: string;
+  ClosedAt: Date | string;
 }
 export const instant = false;
 
@@ -50,10 +51,16 @@ async function ClosedTicketDetails({
   const { id } = await params;
 
   const closedTickets = await query<ClosedTickets[]>(
-    "SELECT * FROM ClosedTickets WHERE ID = ?",
+    `SELECT
+    ClosedTickets.*,
+    Employees.Forename AS ClosedByForename,
+    Employees.Surname AS ClosedBySurname
+    FROM ClosedTickets
+    LEFT JOIN Employees
+    ON ClosedTickets.ClosedBy = Employees.ID
+    WHERE ClosedTickets.ID = ?`,
     [id],
   );
-
   const closedTicket = closedTickets[0];
 
   if (!closedTicket) {
@@ -70,36 +77,47 @@ async function ClosedTicketDetails({
       </div>
       <div className="bg-slate-800 p-4 rounded border border-slate-700">
         <p>
-          <strong>Title:</strong> {closedTicket.Title}
+          <strong className="text-blue-400">Title:</strong> {closedTicket.Title}
         </p>
 
         <p>
-          <strong>Description:</strong> {closedTicket.Description}
+          <strong className="text-blue-400">Description:</strong>{" "}
+          {closedTicket.Description}
         </p>
 
         <p>
-          <strong>Customer name:</strong> {closedTicket.Forename}
+          <strong className="text-blue-400">Customer name:</strong>{" "}
+          {closedTicket.Forename}
         </p>
 
         <p>
-          <strong>Email:</strong> {closedTicket.Mail}
+          <strong className="text-blue-400">Email:</strong> {closedTicket.Mail}
         </p>
 
         <p>
-          <strong>Phone:</strong> {closedTicket.Phone}
+          <strong className="text-blue-400">Phone:</strong> {closedTicket.Phone}
         </p>
 
         <br />
       </div>
       <div className="bg-slate-800 p-4 rounded border border-slate-700 mt-4">
         <p>
-          <strong>Solved Description:</strong> {closedTicket.SolvedDescription}
+          <strong className="text-blue-400">Solved Description:</strong>{" "}
+          {closedTicket.SolvedDescription}
         </p>
         <p>
-          <strong>Closed Date:</strong> {closedTicket.ClosedDate}
+          <strong className="text-blue-400">Closed Date:</strong>{" "}
+          {new Date(closedTicket.ClosedAt).toLocaleString("da-DK", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </p>
         <p>
-          <strong>Closed by:</strong> {closedTicket.ClosedBy}
+          <strong className="text-blue-400">Closed by:</strong>{" "}
+          {closedTicket.ClosedByForename} {closedTicket.ClosedBySurname}
         </p>
       </div>
     </main>

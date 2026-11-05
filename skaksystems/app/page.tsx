@@ -70,7 +70,7 @@ export default function Home() {
             <label htmlFor="Phone" className="text-md font-bold flex-1">
               Phone:
               <input
-                type="text"
+                type="number"
                 id="Phone"
                 name="Phone"
                 className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"

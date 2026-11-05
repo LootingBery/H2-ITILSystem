@@ -78,9 +78,9 @@ export default function AddEmployeeForm() {
                 className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black"
               >
                 <option value="">Select level</option>
-                <option value="1">Level 1</option>
-                <option value="2">Level 2</option>
-                <option value="3">Level 3</option>
+                <option value="1">Level 1 - Phone-junkies</option>
+                <option value="2">Level 2 - Programmer/Cybersecurity</option>
+                <option value="3">Level 3 - Boss</option>
               </select>
             </label>
           </div>

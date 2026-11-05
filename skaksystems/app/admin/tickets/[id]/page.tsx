@@ -56,23 +56,24 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
 
       <div className="bg-slate-800 p-4 rounded border border-slate-700">
         <p>
-          <strong>Title:</strong> {ticket.Title}
+          <strong className="text-blue-400">Title:</strong> {ticket.Title}
         </p>
 
         <p>
-          <strong>Description:</strong> {ticket.Description}
+          <strong className="text-blue-400">Description:</strong>{" "}
+          {ticket.Description}
         </p>
 
         <p>
-          <strong>Name:</strong> {ticket.Forename}
+          <strong className="text-blue-400">Name:</strong> {ticket.Forename}
         </p>
 
         <p>
-          <strong>Email:</strong> {ticket.Mail}
+          <strong className="text-blue-400">Email:</strong> {ticket.Mail}
         </p>
 
         <p>
-          <strong>Phone:</strong> {ticket.Phone}
+          <strong className="text-blue-400">Phone:</strong> {ticket.Phone}
         </p>
 
         <br />

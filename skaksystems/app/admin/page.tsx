@@ -1,6 +1,7 @@
 import { query } from "@/app/db";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import Navbar from "./navbar";
 
 import {
   ChessRook,
@@ -11,7 +12,7 @@ import {
   ChessQueen,
   TicketCheck,
   Ticket,
-  BookOpen,
+  SquarePen,
   User,
 } from "lucide-react";
 
@@ -22,18 +23,20 @@ export default async function Page() {
   if (!session) {
     redirect("/login");
   }
+
+  const [ticketCount, closedTicketCount, employeeCount] = await Promise.all([
+    query<{ total: number }[]>("SELECT COUNT(*) AS total FROM Tickets"),
+    query<{ total: number }[]>("SELECT COUNT(*) AS total FROM ClosedTickets"),
+    query<{ total: number }[]>("SELECT COUNT(*) AS total FROM Employees"),
+  ]);
+
+  const tickets = Number(ticketCount[0].total);
+  const closedTickets = Number(closedTicketCount[0].total);
+  const employees = Number(employeeCount[0].total);
+
   return (
     <main className="min-h-screen bg-[#101116] text-white">
-      <header className="fixed left-0 right-0 top-0 z-50 flex h-[61px] items-center justify-between border border-[#30303a] bg-[#191a22] px-3">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-400">
-            <ChessRook size={19} />
-          </div>
-
-          <span className="text-[15px] font-extrabold">Skak Systems</span>
-        </div>
-      </header>
-
+      <Navbar />
       <aside className="fixed bottom-0 left-0 top-[61px] z-40 w-[260px] border-r border-[#252630] bg-[#191a22] px-2 py-3 max-md:w-[65px]">
         <p className="mb-3 px-1 text-[11px] text-[#9297aa] max-md:text-center">
           MENU
@@ -50,20 +53,20 @@ export default async function Page() {
             href="/admin/documentation"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessRook size={15} className="text-blue-400" /> hallo
+            <ChessRook size={15} className="text-blue-400" />
             Documentation
           </a>
           <a
-            href="#"
+            href="/admin/sla"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessKnight size={15} className="text-blue-400" /> hallo Knight
+            <ChessKnight size={15} className="text-blue-400" /> SLA
           </a>
           <a
             href="/admin/tickets"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653]  text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessBishop size={15} className="text-blue-400" /> hallo Tickets
+            <ChessBishop size={15} className="text-blue-400" /> Tickets
           </a>
           <a
             href="#"
@@ -75,7 +78,7 @@ export default async function Page() {
             href="/admin/employees"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessKing size={15} className="text-blue-400" /> hallo Employees
+            <ChessKing size={15} className="text-blue-400" /> Employees
           </a>
         </nav>
       </aside>
@@ -98,7 +101,7 @@ export default async function Page() {
                 <Ticket size={21} />
               </div>
             </div>
-            <p className="text-3xl font-bold tracking-tight">15</p>
+            <p className="text-3xl font-bold tracking-tight">{tickets}</p>
           </div>
 
           <div className="group rounded-2xl border border-[#30303a] bg-[#252735] p-5 shadow-lg shadow-black/10">
@@ -112,21 +115,19 @@ export default async function Page() {
                 <TicketCheck size={21} />
               </div>
             </div>
-            <p className="text-3xl font-bold tracking-tight">100</p>
+            <p className="text-3xl font-bold tracking-tight">{closedTickets}</p>
           </div>
 
           <div className="group rounded-2xl border border-[#30303a] bg-[#252735] p-5 shadow-lg shadow-black/10">
             <div className="mb-8 flex items-start justify-between">
               <div>
-                <p className="text-md font-medium text-[#c5c8d4]">
-                  Open Tickets
-                </p>
+                <p className="text-md font-medium text-[#c5c8d4]">SLA active</p>
               </div>
               <div className="rounded-xl bg-amber-400/10 p-3 ">
-                <BookOpen size={21} />
+                <SquarePen size={21} />
               </div>
             </div>
-            <p className="text-3xl font-bold tracking-tight">1</p>
+            <p className="text-3xl font-bold tracking-tight">0</p>
           </div>
 
           <div className="group rounded-2xl border border-[#30303a] bg-[#252735] p-5 shadow-lg shadow-black/10 ">
@@ -138,7 +139,7 @@ export default async function Page() {
                 <User size={21} />
               </div>
             </div>
-            <p className="text-3xl font-bold tracking-tight">30</p>
+            <p className="text-3xl font-bold tracking-tight">{employees}</p>
           </div>
         </div>
       </div>
