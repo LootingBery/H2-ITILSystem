@@ -1,6 +1,8 @@
 import { query } from "@/app/db";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { getSession } from "@/app/lib/session";
+import { redirect } from "next/navigation";
 
 interface ClosedTickets {
   ID: number;
@@ -14,12 +16,18 @@ interface ClosedTickets {
   SolvedDescription: string;
   ClosedDate: string;
 }
+export const instant = false;
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <Suspense
       fallback={
