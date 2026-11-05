@@ -1,6 +1,8 @@
 import { query } from "@/app/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import CloseTicketForm from "./CloseTicketForm";
 
 interface Ticket {
   ID: number;
@@ -11,11 +13,21 @@ interface Ticket {
   Phone: string;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
+  return (
+    <Suspense
+      fallback={
+        <main className="p-8 min-h-screen bg-slate-900 text-white">
+          <p>Loading ticket...</p>
+        </main>
+      }
+    >
+      <TicketDetails params={params} />
+    </Suspense>
+  );
+}
+
+async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const tickets = await query<Ticket[]>("SELECT * FROM Tickets WHERE ID = ?", [
@@ -36,18 +48,26 @@ export default async function Page({
         <p>
           <strong>Title:</strong> {ticket.Title}
         </p>
+
         <p>
           <strong>Description:</strong> {ticket.Description}
         </p>
+
         <p>
           <strong>Name:</strong> {ticket.Forename}
         </p>
+
         <p>
           <strong>Email:</strong> {ticket.Mail}
         </p>
+
         <p>
           <strong>Phone:</strong> {ticket.Phone}
         </p>
+
+        <br />
+
+        <CloseTicketForm ticketId={ticket.ID} />
       </div>
 
       <Link
