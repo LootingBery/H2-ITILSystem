@@ -16,6 +16,13 @@ async function TicketsList() {
   const tickets = await query<Tickets[]>("SELECT * FROM Tickets");
   const ticket = tickets[0];
 
+  if (!ticket || tickets.length === 0) {
+    return (
+      <div className="text-center font-semibold text-5xl mt-20 text-white/80">
+        No open tickets. Enjoy slacking!
+      </div>
+    );
+  }
   return (
     <div className="grid gap-2">
       {tickets.map((ticket) => (

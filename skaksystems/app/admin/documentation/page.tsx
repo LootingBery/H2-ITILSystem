@@ -15,6 +15,14 @@ async function ClosedTicketsList() {
     "SELECT * FROM ClosedTickets",
   );
 
+  if (!closedTickets || closedTickets.length === 0) {
+    return (
+      <div className="text-center font-semibold text-5xl mt-20 text-white/80">
+        No closed tickets. Did we lose all our data?
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-2">
       {closedTickets.map((closedTickets) => (

@@ -14,6 +14,14 @@ interface Employees {
 async function EmployeesList() {
   const employees = await query<Employees[]>("SELECT * FROM Employees");
 
+  if (!employees || employees.length === 0) {
+    return (
+      <div className="text-center font-semibold text-5xl mt-20 text-white/80">
+        No employees found. We're going bankrupt!
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-2">
       {employees.map((employee) => (
@@ -21,13 +29,13 @@ async function EmployeesList() {
           key={employee.ID}
           className="p-4 bg-slate-800 rounded border border-slate-700"
         >
-          <p className="font-semibold text-lg">{employee.ID}</p>
+          <p className="font-semibold text-lg">Employee ID: {employee.ID}</p>
 
           <p className="text-md">
             {employee.Forename} {employee.Surname}
           </p>
 
-          <p className="text-sm text-slate-400">{employee.Level}</p>
+          <p className="text-sm text-slate-400">Level: {employee.Level}</p>
         </div>
       ))}
     </div>
