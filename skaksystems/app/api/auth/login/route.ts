@@ -39,8 +39,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  {
+    /*
   const passwordMatch = await bcrypt.compare(password, employee.Password);
-
   if (!passwordMatch) {
     return NextResponse.json(
       { error: "Invalid forename or password" },
@@ -51,20 +52,20 @@ export async function POST(request: NextRequest) {
     throw new Error("SESSION_SECRET is missing");
   }
   const secret = new TextEncoder().encode(process.env.SESSION_SECRET);
-
+  
   const token = await new SignJWT({
     employeeId: employee.ID,
     level: employee.Level,
   })
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("8h")
-    .sign(secret);
-
+  .setProtectedHeader({ alg: "HS256" })
+  .setIssuedAt()
+  .setExpirationTime("8h")
+  .sign(secret);
+  
   const response = NextResponse.json({
     message: "Login successful",
   });
-
+  
   response.cookies.set("session", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -74,4 +75,6 @@ export async function POST(request: NextRequest) {
   });
 
   return response;
+  */
+  }
 }
