@@ -26,12 +26,12 @@ async function ClosedTicketsList() {
           <p className="text-md text-white/80">
             {closedTickets.SolvedDescription}
           </p>
-          <a
+          <Link
             href={`/admin/documentation/${closedTickets.ID}`}
             className="inline-block mt-3 border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center"
           >
             View Details
-          </a>
+          </Link>
         </div>
       ))}
     </div>
