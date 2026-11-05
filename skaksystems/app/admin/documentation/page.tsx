@@ -2,6 +2,7 @@ import { query } from "@/app/db";
 import { Suspense } from "react";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 interface ClosedTickets {
   ID: number;
