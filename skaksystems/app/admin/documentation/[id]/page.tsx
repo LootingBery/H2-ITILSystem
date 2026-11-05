@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 interface ClosedTickets {
   ID: number;
@@ -61,8 +62,12 @@ async function ClosedTicketDetails({
 
   return (
     <main className="p-8 min-h-screen bg-slate-900 text-white">
-      <h1 className="text-2xl font-bold mb-4">Ticket #{closedTicket.ID}</h1>
-
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Ticket #{closedTicket.ID}</h1>
+        <Link href="/admin/documentation" className="p-2 bg-blue-900 rounded">
+          Back to closed tickets
+        </Link>
+      </div>
       <div className="bg-slate-800 p-4 rounded border border-slate-700">
         <p>
           <strong>Title:</strong> {closedTicket.Title}
@@ -73,7 +78,7 @@ async function ClosedTicketDetails({
         </p>
 
         <p>
-          <strong>Name:</strong> {closedTicket.Forename}
+          <strong>Customer name:</strong> {closedTicket.Forename}
         </p>
 
         <p>
@@ -87,12 +92,15 @@ async function ClosedTicketDetails({
         <br />
       </div>
       <div className="bg-slate-800 p-4 rounded border border-slate-700 mt-4">
-        {" "}
-        <strong>Solved Description:</strong> {closedTicket.SolvedDescription}
-        <br />
-        <strong>Closed Date:</strong> {closedTicket.ClosedDate}
-        <br />
-        <strong>Closed by:</strong> {closedTicket.ClosedBy}{" "}
+        <p>
+          <strong>Solved Description:</strong> {closedTicket.SolvedDescription}
+        </p>
+        <p>
+          <strong>Closed Date:</strong> {closedTicket.ClosedDate}
+        </p>
+        <p>
+          <strong>Closed by:</strong> {closedTicket.ClosedBy}
+        </p>
       </div>
     </main>
   );
