@@ -1,8 +1,9 @@
 import { query } from "@/app/db";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 import CloseTicketForm from "./CloseTicketForm";
+import { getSession } from "@/app/lib/session";
 
 interface Ticket {
   ID: number;
@@ -13,7 +14,16 @@ interface Ticket {
   Phone: string;
 }
 
-export default function Page({ params }: { params: Promise<{ id: string }> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <Suspense
       fallback={

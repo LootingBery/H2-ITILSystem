@@ -1,6 +1,8 @@
 import { query } from "@/app/db";
 import { Suspense } from "react";
 import Link from "next/link";
+import { getSession } from "@/app/lib/session";
+import { redirect } from "next/navigation";
 
 interface Tickets {
   ID: number;
@@ -13,6 +15,7 @@ interface Tickets {
 
 async function TicketsList() {
   const tickets = await query<Tickets[]>("SELECT * FROM Tickets");
+  const ticket = tickets[0];
 
   return (
     <div className="grid gap-2">
@@ -40,7 +43,13 @@ async function TicketsList() {
   );
 }
 
-export default function Page() {
+export default async function Page() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
     <main>
       <div className="p-4 text-white bg-slate-900 min-h-screen">

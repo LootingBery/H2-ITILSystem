@@ -1,5 +1,7 @@
-"use client";
 import { query } from "@/app/db";
+import { getSession } from "@/app/lib/session";
+import { redirect } from "next/navigation";
+
 import {
   ChessRook,
   ChessBishop,
@@ -13,7 +15,12 @@ import {
   User,
 } from "lucide-react";
 
-function page() {
+export default async function Page() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <main className="min-h-screen bg-[#101116] text-white">
       <header className="fixed left-0 right-0 top-0 z-50 flex h-[61px] items-center justify-between border border-[#30303a] bg-[#191a22] px-3">
@@ -138,5 +145,4 @@ function page() {
   );
 }
 
-export default page;
 //It needs to be perfect. "Benjamin"
