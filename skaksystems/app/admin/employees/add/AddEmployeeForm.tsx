@@ -57,7 +57,7 @@ export default function AddEmployeeForm() {
             />
           </label>
 
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-30">
             <label htmlFor="Password" className="text-xl font-bold">
               Password:
               <input
@@ -71,13 +71,17 @@ export default function AddEmployeeForm() {
 
             <label htmlFor="Level" className="text-xl font-bold">
               Level:
-              <input
-                type="text"
+              <select
                 id="Level"
                 name="Level"
                 required
                 className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black"
-              />
+              >
+                <option value="">Select level</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+              </select>
             </label>
           </div>
 
