@@ -1,6 +1,7 @@
 import { query } from "@/app/db";
 import { Suspense } from "react";
-
+import { getSession } from "@/app/lib/session";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
 interface ClosedTickets {
@@ -38,7 +39,14 @@ async function ClosedTicketsList() {
   );
 }
 
-export default function Page() {
+export const instant = false;
+
+export default async function AddEmployeePage() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <main>
       <div className="p-4 text-white bg-slate-900 min-h-screen">

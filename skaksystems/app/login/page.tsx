@@ -31,8 +31,8 @@ function page() {
       setError(data.error);
       return;
     }
+    router.push("/admin");
   }
-  router.push("/admin");
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
