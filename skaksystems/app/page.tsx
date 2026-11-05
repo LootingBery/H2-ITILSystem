@@ -57,12 +57,12 @@ export default function Home() {
             />
           </label>
           <div className="flex flex-row gap-4">
-            <label htmlFor="Forname" className="text-md font-bold flex-1">
+            <label htmlFor="Forename" className="text-md font-bold flex-1">
               Name:
               <input
                 type="text"
-                id="Forname"
-                name="Forname"
+                id="Forename"
+                name="Forename"
                 required
                 className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
               />

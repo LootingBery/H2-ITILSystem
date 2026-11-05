@@ -7,13 +7,13 @@ import bcrypt from "bcrypt";
 export async function createTicket(formData: FormData) {
   const Title = formData.get("Title");
   const Description = formData.get("Description");
-  const Forname = formData.get("Forname");
+  const Forename = formData.get("Forename");
   const Mail = formData.get("Mail");
   const Phone = formData.get("Phone");
 
   await query(
-    "INSERT INTO Tickets (Title, Description, Forname, Mail, Phone) VALUES (?, ?, ?, ?, ?)",
-    [Title, Description, Forname, Mail, Phone],
+    "INSERT INTO Tickets (Title, Description, Forename, Mail, Phone) VALUES (?, ?, ?, ?, ?)",
+    [Title, Description, Forename, Mail, Phone],
   );
 
   revalidatePath("/");
