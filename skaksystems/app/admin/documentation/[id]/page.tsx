@@ -1,7 +1,5 @@
 import { query } from "@/app/db";
 import { Suspense } from "react";
-import { getSession } from "@/app/lib/session";
-import { redirect } from "next/navigation";
 
 interface ClosedTickets {
   ID: number;
@@ -59,12 +57,4 @@ async function ClosedTicketsList() {
       </div>
     </main>
   );
-}
-export default async function Page() {
-  const session = await getSession();
-
-  if (!session) {
-    redirect("/login");
-  }
-  return <main>page</main>;
 }
