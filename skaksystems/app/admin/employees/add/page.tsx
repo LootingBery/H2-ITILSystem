@@ -2,6 +2,7 @@ import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import AddEmployeeForm from "./AddEmployeeForm";
 
+export const instant = false;
 export default async function AddEmployeePage() {
   const session = await getSession();
 

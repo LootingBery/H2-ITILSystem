@@ -12,7 +12,6 @@ interface Tickets {
   Mail: string;
   Phone: string;
 }
-
 async function TicketsList() {
   const tickets = await query<Tickets[]>("SELECT * FROM Tickets");
   const ticket = tickets[0];
@@ -43,6 +42,7 @@ async function TicketsList() {
   );
 }
 
+export const instant = false;
 export default async function Page() {
   const session = await getSession();
 

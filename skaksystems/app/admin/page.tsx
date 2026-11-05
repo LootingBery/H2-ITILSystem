@@ -15,6 +15,7 @@ import {
   User,
 } from "lucide-react";
 
+export const instant = false;
 export default async function Page() {
   const session = await getSession();
 

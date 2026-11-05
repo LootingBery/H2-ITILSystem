@@ -34,6 +34,7 @@ async function EmployeesList() {
   );
 }
 
+export const instant = false;
 export default async function Page() {
   const session = await getSession();
 
