@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function page() {
   const [forename, setForename] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,6 +32,7 @@ function page() {
       return;
     }
   }
+  router.push("/admin");
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
