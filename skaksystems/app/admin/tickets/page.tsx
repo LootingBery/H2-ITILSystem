@@ -83,7 +83,7 @@ export default async function Page() {
           <h1 className="text-2xl font-bold">Tickets</h1>
           <div className="flex gap-2">
             <Link
-              href="/"
+              href="/admin/tickets/add"
               className="border border-black bg-blue-900 rounded-md p-2"
             >
               Add Ticket
