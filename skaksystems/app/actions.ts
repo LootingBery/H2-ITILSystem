@@ -10,10 +10,11 @@ export async function createTicket(formData: FormData) {
   const Forename = formData.get("Forename");
   const Mail = formData.get("Mail");
   const Phone = formData.get("Phone");
+  const Priority = formData.get("Priority");
 
   await query(
-    "INSERT INTO Tickets (Title, Description, Forename, Mail, Phone) VALUES (?, ?, ?, ?, ?)",
-    [Title, Description, Forename, Mail, Phone],
+    "INSERT INTO Tickets (Title, Description, Forename, Mail, Phone, Priority) VALUES (?, ?, ?, ?, ?, ?)",
+    [Title, Description, Forename, Mail, Phone, 1],
   );
 
   revalidatePath("/");

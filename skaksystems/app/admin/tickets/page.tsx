@@ -1,8 +1,9 @@
-import { query } from "@/app/db";
+import { pool, query } from "@/app/db";
 import { Suspense } from "react";
 import Link from "next/link";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import PriorityDropdown from "./PriorityDropdown";
 
 interface Tickets {
   ID: number;
@@ -11,9 +12,27 @@ interface Tickets {
   Forename: string;
   Mail: string;
   Phone: string;
+  Priority: number;
 }
 async function TicketsList() {
-  const tickets = await query<Tickets[]>("SELECT * FROM Tickets");
+  const session = await getSession();
+  let level = "";
+
+  if (session) {
+    const [rows] = await pool.execute(
+      "SELECT Level FROM Employees WHERE ID = ?",
+      [session.employeeId],
+    );
+
+    const employees = rows as { Level: string }[];
+
+    level = employees[0]?.Level ?? "";
+  }
+
+  const tickets = await query<Tickets[]>(
+    "SELECT * FROM Tickets WHERE Priority <= ? ORDER BY Priority DESC",
+    [Number(level)],
+  );
   const ticket = tickets[0];
 
   if (!ticket || tickets.length === 0) {
@@ -30,13 +49,13 @@ async function TicketsList() {
           key={ticket.ID}
           className="p-4 bg-slate-800 rounded border border-slate-700"
         >
+          <PriorityDropdown ticketId={ticket.ID} priority={ticket.Priority} />
           <p className="font-semibold text-lg">Ticket #{ticket.ID}</p>
 
           <p className="font-semibold text-lg">{ticket.Title}</p>
 
           <p>{ticket.Forename}</p>
           <p className="text-sm text-slate-400">{ticket.Mail}</p>
-
           <Link
             href={`/admin/tickets/${ticket.ID}`}
             className="inline-block mt-3 border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center"
@@ -62,13 +81,20 @@ export default async function Page() {
       <div className="p-4 text-white bg-slate-900 min-h-screen">
         <div className="mb-4 flex flex-row justify-between items-center">
           <h1 className="text-2xl font-bold">Tickets</h1>
-
-          <Link
-            href="/admin"
-            className="border border-black bg-blue-900 rounded-md p-2"
-          >
-            Back to admin
-          </Link>
+          <div className="flex gap-2">
+            <Link
+              href="/admin/tickets/add"
+              className="border border-black bg-blue-900 rounded-md p-2"
+            >
+              Add Ticket
+            </Link>
+            <Link
+              href="/admin"
+              className="border border-black bg-blue-900 rounded-md p-2"
+            >
+              Back to admin
+            </Link>
+          </div>
         </div>
 
         <div className="mb-6 h-px w-full bg-blue-400/70" />

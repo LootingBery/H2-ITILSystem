@@ -34,7 +34,6 @@ export default function CloseTicketForm({ ticketId }: { ticketId: number }) {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="SolvedDescription">Problem Solved Description</label>
-
       <textarea
         id="SolvedDescription"
         value={SolvedDescription}
