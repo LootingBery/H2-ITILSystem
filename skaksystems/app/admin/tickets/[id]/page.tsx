@@ -12,6 +12,7 @@ interface Ticket {
   Forename: string;
   Mail: string;
   Phone: string;
+  Priority: number;
 }
 export const instant = false;
 export default async function Page({
@@ -49,6 +50,14 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
   if (!ticket) {
     notFound();
   }
+  let ticketpreority = "";
+  if (ticket.Priority == 1) {
+    ticketpreority = "Minimally";
+  } else if (ticket.Priority == 2) {
+    ticketpreority = "Important";
+  } else if (ticket.Priority == 3) {
+    ticketpreority = "Critical";
+  }
 
   return (
     <main className="p-8 min-h-screen bg-slate-900 text-white">
@@ -78,6 +87,9 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
 
         <br />
 
+        <p>
+          <strong className="text-blue-400">Priority:</strong> {ticketpreority}
+        </p>
         <CloseTicketForm ticketId={ticket.ID} />
       </div>
 
