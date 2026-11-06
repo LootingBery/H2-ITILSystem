@@ -37,3 +37,32 @@ export async function createEmployee(formData: FormData) {
 
   revalidatePath("/admin/employees/add");
 }
+export async function createSLA(formData: FormData) {
+  const Title = formData.get("Title")?.toString();
+  const Description = formData.get("Description")?.toString();
+  const Punishment = formData.get("Punishment")?.toString();
+  const ExpirationDate = formData.get("ExpirationDate")?.toString();
+
+  if (!Title || !Description || !Punishment || !ExpirationDate) {
+    throw new Error("All SLA fields are required");
+  }
+
+  if (!Title) {
+    throw new Error("Title is required");
+  }
+  if (!Description) {
+    throw new Error("Description is required");
+  }
+  if (!Punishment) {
+    throw new Error("Punishment is required");
+  }
+  if (!ExpirationDate) {
+    throw new Error("Expiration date is required");
+  }
+  await query(
+    "INSERT INTO SLA (Title, Description, Punishment, ExpirationDate) VALUES (?, ?, ?, ?)",
+    [Title, Description, Punishment, ExpirationDate],
+  );
+
+  revalidatePath("/admin/sla/add");
+}
