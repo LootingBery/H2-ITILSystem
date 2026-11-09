@@ -53,7 +53,7 @@ export default function Home() {
 
         <div className="mb-6 h-px w-full bg-blue-400/70" />
         <div className="justify-center flex flex-col mx-auto max-w-2xl w-full h-max rounded-md">
-          <div className="justify-center flex flex-col bg-gray-600/80 max-w-2xl w-full h-max rounded-md">
+          <div className="justify-center flex flex-col bg-gray-800 max-w-2xl w-full h-max rounded-md">
             <div className="flex flex-col  max-w-2xl w-full h-max rounded-md"></div>
             <form
               onSubmit={handleSubmit}
@@ -66,7 +66,7 @@ export default function Home() {
                   id="Title"
                   name="Title"
                   required
-                  className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
                 />
               </label>
 
@@ -76,7 +76,7 @@ export default function Home() {
                   id="Description"
                   name="Description"
                   rows={6}
-                  className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
+                  className="mt-1 block w-full resize-y rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
                 />
               </label>
               <div className="flex flex-row gap-4">
@@ -87,7 +87,7 @@ export default function Home() {
                     id="Forename"
                     name="Forename"
                     required
-                    className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
+                    className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
                   />
                 </label>
                 <label htmlFor="Phone" className="text-md font-bold flex-1">
@@ -96,7 +96,7 @@ export default function Home() {
                     type="number"
                     id="Phone"
                     name="Phone"
-                    className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
+                    className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
                   />
                 </label>
               </div>
@@ -107,7 +107,7 @@ export default function Home() {
                   id="Mail"
                   name="Mail"
                   required
-                  className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
                 />
               </label>
 

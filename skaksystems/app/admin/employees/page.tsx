@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import { pool } from "@/app/db";
+import DeleteEmployeeButton from "./DeleteEmployeeButton";
+import Link from "next/link";
 
 interface Employees {
   ID: number;
@@ -12,13 +14,27 @@ interface Employees {
   Password: string;
 }
 
-async function EmployeesList() {
-  const employees = await query<Employees[]>("SELECT * FROM Employees");
+async function EmployeesList({
+  level,
+  currentEmployeeId,
+}: {
+  level: string;
+  currentEmployeeId?: number;
+}) {
+  var employees = null;
+  if (Number(level) <= 3) {
+    employees = await query<Employees[]>(
+      "SELECT * FROM Employees WHERE Level <= 3",
+    );
+  }
+  if (Number(level) == 4) {
+    employees = await query<Employees[]>("SELECT * FROM Employees");
+  }
 
   if (!employees || employees.length === 0) {
     return (
       <div className="text-center font-semibold text-5xl mt-20 text-white/80">
-        No employees found. We're going bankrupt!
+        No employees found. We're going bankrupt !
       </div>
     );
   }
@@ -28,15 +44,31 @@ async function EmployeesList() {
       {employees.map((employee) => (
         <div
           key={employee.ID}
-          className="p-4 bg-slate-800 rounded border border-slate-700"
+          className="flex items-center justify-between gap-4 rounded border border-slate-700 bg-slate-800 p-4"
         >
-          <p className="font-semibold text-lg">Employee ID: {employee.ID}</p>
+          <div>
+            <p className="text-sm text-gray-400">Employee ID: {employee.ID}</p>
+            <p className="text-md">
+              {employee.Forename} {employee.Surname}
+            </p>
+            <p className="text-md text-white">Level: {employee.Level}</p>
+          </div>
 
-          <p className="text-md">
-            {employee.Forename} {employee.Surname}
-          </p>
+          {Number(level) >= 3 && (
+            <div className="flex items-center gap-3">
+              <Link
+                href={`/admin/employees/${employee.ID}`}
+                className="rounded-md border border-black bg-blue-900 p-2 text-center hover:bg-blue-700"
+              >
+                Edit Employee
+              </Link>
 
-          <p className="text-sm text-slate-400">Level: {employee.Level}</p>
+              <DeleteEmployeeButton
+                employeeId={employee.ID}
+                isCurrentUser={employee.ID === currentEmployeeId}
+              />
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -88,7 +120,10 @@ export default async function Page() {
         <div className="mb-6 h-px w-full bg-blue-400/70" />
 
         <Suspense fallback={<p className="text-white">Loading employees...</p>}>
-          <EmployeesList />
+          <EmployeesList
+            level={level}
+            currentEmployeeId={session?.employeeId}
+          />
         </Suspense>
       </div>
     </main>

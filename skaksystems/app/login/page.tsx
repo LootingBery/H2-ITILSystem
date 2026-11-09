@@ -36,7 +36,7 @@ function page() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="rounded-lg bg-gray-600/80 text-white p-10 flex flex-col gap-1">
+      <div className="rounded-lg bg-gray-800 text-white p-10 flex flex-col gap-1">
         <h1 className=" text-white rounded-lg text-center text-xl font-bold p-2">
           Login
         </h1>
@@ -51,7 +51,7 @@ function page() {
             name="forename"
             value={forename}
             onChange={(e) => setForename(e.target.value)}
-            className="border border-black bg-blue-200 text-black rounded-md p-2"
+            className="rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400 sm:text-sm"
           />
           <br></br>
           <label htmlFor="password" className="text-lg font-medium">
@@ -63,7 +63,7 @@ function page() {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-black bg-blue-200 text-black rounded-md p-2"
+            className="rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400 sm:text-sm"
           />
           <br></br>
           <button

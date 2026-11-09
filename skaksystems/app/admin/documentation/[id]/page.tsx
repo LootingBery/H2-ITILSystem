@@ -70,7 +70,7 @@ async function ClosedTicketDetails({
   return (
     <main className="p-8 min-h-screen bg-slate-900 text-white">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Ticket #{closedTicket.ID}</h1>
+        <h1 className="text-2xl font-bold">Ticket: {closedTicket.ID}</h1>
         <Link href="/admin/documentation" className="p-2 bg-blue-900 rounded">
           Back to closed tickets
         </Link>

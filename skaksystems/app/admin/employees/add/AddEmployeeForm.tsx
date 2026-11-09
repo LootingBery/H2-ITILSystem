@@ -1,6 +1,7 @@
 "use client";
 
 import { createEmployee } from "@/app/actions";
+import Link from "next/dist/client/link";
 import { useState } from "react";
 
 export default function AddEmployeeForm() {
@@ -30,7 +31,7 @@ export default function AddEmployeeForm() {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans text-white">
-      <div className="flex flex-col bg-gray-600/80 max-w-2xl w-full h-max rounded-md">
+      <div className="flex flex-col bg-gray-800 max-w-2xl w-full h-max rounded-md">
         <form
           onSubmit={handleSubmit}
           className="justify-center flex flex-col gap-4 p-4"
@@ -42,7 +43,7 @@ export default function AddEmployeeForm() {
               id="Forename"
               name="Forename"
               required
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black"
+              className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
             />
           </label>
 
@@ -53,7 +54,7 @@ export default function AddEmployeeForm() {
               id="Surname"
               name="Surname"
               required
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black"
+              className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
             />
           </label>
 
@@ -65,7 +66,7 @@ export default function AddEmployeeForm() {
                 id="Password"
                 name="Password"
                 required
-                className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black"
+                className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
               />
             </label>
 
@@ -75,7 +76,7 @@ export default function AddEmployeeForm() {
                 id="Level"
                 name="Level"
                 required
-                className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black"
+                className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
               >
                 <option value="">Select level</option>
                 <option value="1">Level 1 - Phone-junkies</option>
@@ -84,13 +85,18 @@ export default function AddEmployeeForm() {
               </select>
             </label>
           </div>
-
-          <div className="flex justify-center mt-2">
+          <div className="flex justify-end gap-3">
+            <Link
+              href="/admin/employees"
+              className="rounded-md bg-slate-600 px-5 py-3 hover:bg-slate-500"
+            >
+              Cancel
+            </Link>
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="rounded-md bg-blue-700 px-6 py-3 font-semibold hover:bg-blue-600"
             >
-              Submit
+              Save Changes
             </button>
           </div>
 

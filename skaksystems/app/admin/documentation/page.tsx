@@ -30,7 +30,9 @@ async function ClosedTicketsList() {
           key={closedTickets.ID}
           className="p-4 bg-slate-800 rounded border border-slate-700"
         >
-          <p className="font-semibold text-lg">{closedTickets.ID}</p>
+          <p className="font-sm text-gray-400 text-sm">
+            Closed Tickets ID: {closedTickets.ID}
+          </p>
           <p className="font-semibold text-lg">{closedTickets.Title}</p>
           <p className="text-md text-white/80">
             {closedTickets.SolvedDescription}

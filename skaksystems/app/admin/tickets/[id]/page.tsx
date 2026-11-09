@@ -61,7 +61,7 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <main className="p-8 min-h-screen bg-slate-900 text-white">
-      <h1 className="text-2xl font-bold mb-4">Ticket #{ticket.ID}</h1>
+      <h1 className="text-2xl font-bold mb-4">Ticket: {ticket.ID}</h1>
 
       <div className="bg-slate-800 p-4 rounded border border-slate-700">
         <p>

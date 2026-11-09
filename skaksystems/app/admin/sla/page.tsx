@@ -32,7 +32,7 @@ async function GetSLA({ level }: { level: number }) {
           key={sla.ID}
           className="p-4 bg-slate-800 rounded border border-slate-700"
         >
-          <p className="font-sm text-gray-400 text-sm">SLA #{sla.ID}</p>
+          <p className="font-sm text-gray-400 text-sm">SLA: {sla.ID}</p>
           <p className="font-semibold text-lg">{sla.Title}</p>
           <p className="text-sm text-white/80">{sla.Description}</p>
           <p className="text-sm text-white/80">Punishment: {sla.Punishment}</p>

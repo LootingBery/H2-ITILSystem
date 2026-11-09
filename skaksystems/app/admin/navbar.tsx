@@ -6,17 +6,23 @@ import UserDropdown from "./UserDropdown";
 async function Navbar() {
   const session = await getSession();
   let forename = "";
+  let surname = "";
   let level = "";
 
   if (session) {
     const [rows] = await pool.execute(
-      "SELECT Forename, Level FROM Employees WHERE ID = ?",
+      "SELECT Forename, Surname, Level FROM Employees WHERE ID = ?",
       [session.employeeId],
     );
 
-    const employees = rows as { Forename: string; Level: string }[];
+    const employees = rows as {
+      Forename: string;
+      Surname: string;
+      Level: string;
+    }[];
 
     forename = employees[0]?.Forename ?? "";
+    surname = employees[0]?.Surname ?? "";
     level = employees[0]?.Level ?? "";
   }
 
@@ -30,7 +36,7 @@ async function Navbar() {
         <span className="text-[15px] font-extrabold">Skak Systems</span>
       </div>
 
-      <UserDropdown forename={forename} level={level} />
+      <UserDropdown forename={forename} surname={surname} level={level} />
     </header>
   );
 }

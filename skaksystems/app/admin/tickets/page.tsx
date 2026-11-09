@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import PriorityDropdown from "./PriorityDropdown";
+import DeleteTicketButton from "./DeleteTicketButton";
 
 interface Tickets {
   ID: number;
@@ -28,7 +29,6 @@ async function TicketsList() {
 
     level = employees[0]?.Level ?? "";
   }
-
   const tickets = await query<Tickets[]>(
     "SELECT * FROM Tickets WHERE Priority <= ? ORDER BY Priority DESC",
     [Number(level)],
@@ -47,21 +47,26 @@ async function TicketsList() {
       {tickets.map((ticket) => (
         <div
           key={ticket.ID}
-          className="p-4 bg-slate-800 rounded border border-slate-700"
+          className="relative p-4 bg-slate-800 rounded border border-slate-700"
         >
-          <PriorityDropdown ticketId={ticket.ID} priority={ticket.Priority} />
-          <p className="font-semibold text-lg">Ticket #{ticket.ID}</p>
+          <div className="absolute right-10 top-2">
+            <PriorityDropdown ticketId={ticket.ID} priority={ticket.Priority} />
+          </div>
+          <p className="font-sm text-gray-400 text-sm">Ticket: {ticket.ID}</p>
 
           <p className="font-semibold text-lg">{ticket.Title}</p>
 
           <p>{ticket.Forename}</p>
           <p className="text-sm text-slate-400">{ticket.Mail}</p>
-          <Link
-            href={`/admin/tickets/${ticket.ID}`}
-            className="inline-block mt-3 border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center"
-          >
-            View Ticket
-          </Link>
+          <div className=" flex items-center justify-between">
+            <Link
+              href={`/admin/tickets/${ticket.ID}`}
+              className="border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center hover:cursor-pointer"
+            >
+              View Ticket
+            </Link>
+            {Number(level) >= 3 && <DeleteTicketButton ticketId={ticket.ID} />}
+          </div>
         </div>
       ))}
     </div>

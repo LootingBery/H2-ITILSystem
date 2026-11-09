@@ -44,7 +44,7 @@ export default function PriorityDropdown({
       name="Priority"
       value={currentPriority}
       onChange={handleChange}
-      className="mt-2 bg-slate-700 text-white p-1 rounded right-10 absolute"
+      className="rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
     >
       <option value={1}>Minimally</option>
       <option value={2}>Important</option>

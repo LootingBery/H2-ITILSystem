@@ -41,7 +41,7 @@ export default function CloseTicketForm({ ticketId }: { ticketId: number }) {
         placeholder="How did you solve the problem?"
         rows={6}
         required
-        className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black"
+        className="mt-1 block w-full resize-y rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
       />
 
       {error && <p className="text-red-400 mt-2">{error}</p>}

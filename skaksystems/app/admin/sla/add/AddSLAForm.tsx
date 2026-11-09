@@ -68,7 +68,7 @@ export default function AddSLAForm() {
               id="Title"
               name="Title"
               required
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40"
+              className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
             />
           </label>
 
@@ -78,7 +78,7 @@ export default function AddSLAForm() {
               id="Description"
               name="Description"
               rows={6}
-              className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40"
+              className="mt-1 block w-full resize-y rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
             />
           </label>
 
@@ -90,7 +90,7 @@ export default function AddSLAForm() {
               name="ExpirationDate"
               min={today}
               required
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40"
+              className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
             />
           </label>
 
@@ -101,7 +101,7 @@ export default function AddSLAForm() {
               id="Punishment"
               name="Punishment"
               required
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40"
+              className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
             />
           </label>
 

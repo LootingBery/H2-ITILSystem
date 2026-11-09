@@ -60,7 +60,7 @@ export default async function Page({
   return (
     <main className="min-h-screen bg-slate-900 p-4 text-white">
       <div className="relative mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Edit SLA #{sla.ID}</h1>
+        <h1 className="text-2xl font-bold">Edit SLA: {sla.ID}</h1>
       </div>
 
       <div className="mb-6 h-px w-full bg-blue-400/70" />
