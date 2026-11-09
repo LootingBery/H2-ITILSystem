@@ -1,118 +1,28 @@
-"use client";
+import { pool } from "@/app/db";
+import { getSession } from "@/app/lib/session";
+import { redirect } from "next/navigation";
+import AddSLAForm from "./AddSLAForm";
 
-import React, { useState } from "react";
-import { createSLA } from "@/app/actions";
+export const instant = false;
 
-export default function Home() {
-  const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState<"success" | "error">(
-    "success",
-  );
+export default async function Page() {
+  const session = await getSession();
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setMessage("Submitting...");
-    setMessageType("success");
-
-    try {
-      const form = e.currentTarget;
-      const formData = new FormData(form);
-
-      await createSLA(formData);
-
-      setMessage("Service Level Agreement created successfully!");
-      form.reset();
-    } catch (error) {
-      console.error("Error submitting SLA:", error);
-      setMessage("Error submitting SLA. Please try again later.");
-      setMessageType("error");
-    }
+  if (!session) {
+    redirect("/login");
   }
 
-  return (
-    <main className="flex flex-col flex-1 items-center justify-center font-sans text-white">
-      <div className="mb-4 flex w-full max-w-2xl items-center justify-between gap-4">
-        <h1 className="text-right text-2xl font-bold">
-          SLA | Service Level Agreement
-        </h1>
-        <a
-          href="/admin/sla"
-          className="border border-black bg-blue-900 rounded-md p-3 hover:cursor-pointer text-center"
-        >
-          Back to overview
-        </a>
-      </div>
-      <div className="flex flex-col bg-gray-600/80 max-w-2xl w-full h-max rounded-md">
-        <form
-          onSubmit={handleSubmit}
-          className="justify-center flex flex-col gap-4 p-4"
-        >
-          <label htmlFor="Title" className="text-xl font-bold">
-            Title:
-            <input
-              type="text"
-              id="Title"
-              name="Title"
-              required
-              className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
-            />
-          </label>
-
-          <label htmlFor="Description" className="text-md font-bold mt-1">
-            Description:
-            <textarea
-              id="Description"
-              name="Description"
-              rows={6}
-              className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
-            />
-          </label>
-
-          <label className="text-md font-bold">
-            Expiration date of the SLA:
-            <input
-              type="date"
-              id="ExpirationDate"
-              name="ExpirationDate"
-              min={new Date().toISOString().split("T")[0]}
-              required
-              className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
-            />
-          </label>
-
-          <label
-            htmlFor="Punishment"
-            className="text-md font-bold text-red-500"
-          >
-            Punishment if the SLA is not met:
-            <input
-              type="text"
-              id="Punishment"
-              name="Punishment"
-              required
-              className="mt-1 block w-full resize-y rounded-md border border-slate-300 bg-blue-200 p-3 text-black shadow-sm outline-none transition-colors placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40 sm:text-sm"
-            />
-          </label>
-
-          <div className="flex justify-center items-center mt-2 flex-col">
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Submit
-            </button>
-            {message && (
-              <p
-                className={`text-center font-bold ${
-                  messageType === "success" ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {message}
-              </p>
-            )}
-          </div>
-        </form>
-      </div>
-    </main>
+  const [rows] = await pool.execute(
+    "SELECT Level FROM Employees WHERE ID = ?",
+    [session.employeeId],
   );
+
+  const employees = rows as { Level: string }[];
+  const level = Number(employees[0]?.Level ?? 0);
+
+  if (level < 3) {
+    redirect("/admin/sla");
+  }
+
+  return <AddSLAForm />;
 }

@@ -14,6 +14,10 @@ export default function UserDropdown({ forename, level }: UserDropdownProps) {
   return (
     <div className="relative">
       <button
+        type="button"
+        aria-label="open brugermenu"
+        aria-expanded={isOpen}
+        aria-controls="user-dropdown"
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center hover:cursor-pointer gap-2 rounded-lg border border-[#30303a] px-2 py-1"
       >
