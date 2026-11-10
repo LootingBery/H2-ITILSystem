@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
-import PriorityDropdown from "./PriorityDropdown";
 import DeleteTicketButton from "./DeleteTicketButton";
 
 interface Tickets {
@@ -49,9 +48,6 @@ async function TicketsList() {
           key={ticket.ID}
           className="relative p-4 bg-slate-800 rounded border border-slate-700"
         >
-          <div className="absolute right-10 top-2">
-            <PriorityDropdown ticketId={ticket.ID} priority={ticket.Priority} />
-          </div>
           <p className="font-sm text-gray-400 text-sm">Ticket: {ticket.ID}</p>
 
           <p className="font-semibold text-lg">{ticket.Title}</p>

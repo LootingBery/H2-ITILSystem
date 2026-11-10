@@ -33,11 +33,11 @@ export async function updateSLA(formData: FormData) {
 
   await pool.execute(
     `UPDATE SLA
-     SET Title = ?,
-         Description = ?,
-         ExpirationDate = ?,
-         Punishment = ?
-     WHERE ID = ?`,
+    SET Title = ?,
+    Description = ?,
+    ExpirationDate = ?,
+    Punishment = ?
+    WHERE ID = ?`,
     [title, description, expirationDate, punishment, id],
   );
 

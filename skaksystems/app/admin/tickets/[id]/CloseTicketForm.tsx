@@ -48,7 +48,7 @@ export default function CloseTicketForm({ ticketId }: { ticketId: number }) {
 
       <button
         type="submit"
-        className="mt-4 rounded bg-green-700 p-2 hover:bg-green-600"
+        className="mt-4 rounded bg-green-700 p-2 hover:bg-green-600 hover:cursor-pointer"
       >
         Close Ticket
       </button>

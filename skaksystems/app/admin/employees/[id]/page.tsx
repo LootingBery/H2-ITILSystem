@@ -127,7 +127,7 @@ export default async function Page({
 
           <button
             type="submit"
-            className="rounded-md bg-blue-700 px-6 py-3 font-semibold hover:bg-blue-600"
+            className="rounded-md bg-blue-700 px-6 py-3 font-semibold hover:bg-blue-600 hover:cursor-pointer"
           >
             Save Changes
           </button>

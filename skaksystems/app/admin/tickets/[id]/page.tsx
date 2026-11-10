@@ -1,9 +1,11 @@
 import { query } from "@/app/db";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { getSession } from "@/app/lib/session";
 import { Suspense } from "react";
 import CloseTicketForm from "./CloseTicketForm";
-import { getSession } from "@/app/lib/session";
+import ForwardTicketForm from "./ForwardTicketForm";
+import ForwardTicketHistory from "./ForwardTicketHistory";
 
 interface Ticket {
   ID: number;
@@ -13,7 +15,9 @@ interface Ticket {
   Mail: string;
   Phone: string;
   Priority: number;
+  AssignedLevel: number;
 }
+
 export const instant = false;
 export default async function Page({
   params,
@@ -60,7 +64,7 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
   }
 
   return (
-    <main className="p-8 min-h-screen bg-slate-900 text-white">
+    <main className="p-8 min-h-screen bg-slate-900 text-white scrollbar-none">
       <h1 className="text-2xl font-bold mb-4">Ticket: {ticket.ID}</h1>
 
       <div className="bg-slate-800 p-4 rounded border border-slate-700">
@@ -87,9 +91,16 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
 
         <br />
 
+        <ForwardTicketForm
+          ticketId={ticket.ID}
+          assignedLevel={Number(ticket.AssignedLevel)}
+        />
+
+        <ForwardTicketHistory ticketId={ticket.ID} />
         <p>
           <strong className="text-blue-400">Priority:</strong> {ticketpreority}
         </p>
+
         <CloseTicketForm ticketId={ticket.ID} />
       </div>
 

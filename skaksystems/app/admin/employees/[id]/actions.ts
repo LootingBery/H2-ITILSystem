@@ -41,10 +41,10 @@ export async function updateemployee(formData: FormData) {
 
   const [result] = await pool.execute(
     `UPDATE Employees
-     SET Forename = ?,
-         Surname = ?,
-         Level = ?
-     WHERE ID = ?`,
+    SET Forename = ?,
+    Surname = ?,
+    Level = ?
+    WHERE ID = ?`,
     [forename, surname, level, id],
   );
 

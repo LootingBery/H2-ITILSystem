@@ -39,7 +39,7 @@ export default function DeleteTicketButton({ ticketId }: { ticketId: number }) {
       type="button"
       onClick={handleDelete}
       disabled={isDeleting}
-      className="right-7 absolute border border-black bg-red-900 rounded-md p-2 hover:bg-red-700 text-center hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+      className="right-10 absolute border border-black bg-red-900 rounded-md p-2 hover:bg-red-700 text-center hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
     >
       {isDeleting ? "Deleting..." : "Delete Ticket"}
     </button>
