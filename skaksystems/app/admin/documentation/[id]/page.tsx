@@ -120,6 +120,9 @@ async function ClosedTicketDetails({
           {closedTicket.ClosedByForename} {closedTicket.ClosedBySurname}
         </p>
       </div>
+      <button className="inline-block mt-4 p-2 bg-blue-900 rounded">
+        Add to problem
+      </button>
     </main>
   );
 }

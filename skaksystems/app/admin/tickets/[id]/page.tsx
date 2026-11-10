@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import CloseTicketForm from "./CloseTicketForm";
 import ForwardTicketForm from "./ForwardTicketForm";
 import ForwardTicketHistory from "./ForwardTicketHistory";
+import PriorityDropdown from "./PriorityDropdown";
 
 interface Ticket {
   ID: number;
@@ -98,12 +99,20 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
 
         <ForwardTicketHistory ticketId={ticket.ID} />
         <p>
-          <strong className="text-blue-400">Priority:</strong> {ticketpreority}
+          <span className="font-semibold text-blue-400">Forwarded level:</span>{" "}
+          {ticket.AssignedLevel}
         </p>
+        <div className="flex items-center justify-between">
+          <p>
+            <span className="font-semibold text-blue-400">Priority:</span>{" "}
+            {ticketpreority}
+          </p>
+
+          <PriorityDropdown ticketId={ticket.ID} priority={ticket.Priority} />
+        </div>
 
         <CloseTicketForm ticketId={ticket.ID} />
       </div>
-
       <Link
         href="/admin/tickets"
         className="inline-block mt-4 p-2 bg-blue-900 rounded"

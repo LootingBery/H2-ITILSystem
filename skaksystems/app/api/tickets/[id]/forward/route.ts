@@ -117,10 +117,9 @@ export async function POST(
 
     await connection.execute(
       `UPDATE Tickets
-    SET AssignedLevel = ?,
-    Priority = ?
+    SET AssignedLevel = ?
     WHERE ID = ?`,
-      [level, level, ticketId],
+      [level, ticketId],
     );
 
     await connection.execute(

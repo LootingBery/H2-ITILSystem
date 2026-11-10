@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import DeleteTicketButton from "./DeleteTicketButton";
+import { count } from "console";
 
 interface Tickets {
   ID: number;
@@ -13,7 +14,19 @@ interface Tickets {
   Mail: string;
   Phone: string;
   Priority: number;
+  AssignedLevel: number;
 }
+const priorityNames: Record<number, string> = {
+  1: "Minimally",
+  2: "Important",
+  3: "Critical",
+};
+const priorityColors: Record<number, string> = {
+  1: "text-green-400",
+  2: "text-yellow-400",
+  3: "text-red-400",
+};
+
 async function TicketsList() {
   const session = await getSession();
   let level = "";
@@ -32,9 +45,8 @@ async function TicketsList() {
     "SELECT * FROM Tickets WHERE Priority <= ? ORDER BY Priority DESC",
     [Number(level)],
   );
-  const ticket = tickets[0];
 
-  if (!ticket || tickets.length === 0) {
+  if (tickets.length === 0) {
     return (
       <div className="text-center font-semibold text-5xl mt-20 text-white/80">
         No open tickets. Enjoy slacking!
@@ -49,6 +61,17 @@ async function TicketsList() {
           className="relative p-4 bg-slate-800 rounded border border-slate-700"
         >
           <p className="font-sm text-gray-400 text-sm">Ticket: {ticket.ID}</p>
+
+          <p className="font-sm text-gray-400 text-sm">
+            Forwarded level: {ticket.AssignedLevel}
+          </p>
+
+          <p className="text-sm text-gray-400">
+            Priority:{" "}
+            <span className={priorityColors[ticket.Priority]}>
+              {priorityNames[ticket.Priority]}
+            </span>
+          </p>
 
           <p className="font-semibold text-lg">{ticket.Title}</p>
 
