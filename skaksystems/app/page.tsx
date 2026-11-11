@@ -72,6 +72,8 @@ export default function Home() {
               <input
                 type="number"
                 id="Phone"
+                min="8"
+                max="8"
                 name="Phone"
                 className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
               />
@@ -80,11 +82,13 @@ export default function Home() {
           <label htmlFor="Mail" className="text-md font-bold">
             Mail:
             <input
-              type="text"
+              type="Mail"
               id="Mail"
               name="Mail"
-              required
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
               className="mt-1 block w-full rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"
+              title="Please enter an email address with a domain extension (e.g., name@example.com)"
+              required
             />
           </label>
 
