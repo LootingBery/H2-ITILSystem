@@ -9,6 +9,7 @@ interface Problems {
   ID: number;
   Title: string;
   Description: string;
+  ClosedTicketCount: number;
 }
 
 async function ProblemsList() {
@@ -25,8 +26,13 @@ async function ProblemsList() {
 
     level = employees[0]?.Level ?? "";
   }
-  const Problems = await query<Problems[]>("SELECT * FROM Problems");
-
+  const Problems = await query<Problems[]>(
+    `SELECT Problems.ID, Problems.Title, Problems.Description,
+            COUNT(ClosedTickets.ID) AS ClosedTicketCount
+     FROM Problems
+     LEFT JOIN ClosedTickets ON ClosedTickets.ProblemID = Problems.ID
+     GROUP BY Problems.ID, Problems.Title, Problems.Description`,
+  );
   if (Problems.length === 0) {
     return (
       <div className="text-center font-semibold text-5xl mt-20 text-white/80">
@@ -41,10 +47,17 @@ async function ProblemsList() {
           key={Problems.ID}
           className="relative p-4 bg-slate-800 rounded border border-slate-700"
         >
-          <p className="font-sm text-gray-400 text-sm">
-            Problem ID: {Problems.ID}
-          </p>
-
+          <div className="flex items-center justify-between gap-4">
+            <p className="font-sm text-gray-400 text-sm">
+              Problem ID: {Problems.ID}
+            </p>
+            <p className="font-sm text-gray-400 text-sm">
+              Tickets associated with this problem:{" "}
+              <span className="font-bold text-blue-400">
+                {Problems.ClosedTicketCount}
+              </span>
+            </p>
+          </div>
           <p className="font-semibold text-lg">{Problems.Title}</p>
 
           <p className="text-sm text-slate-400">{Problems.Description}</p>
