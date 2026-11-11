@@ -40,7 +40,7 @@ export default function Home() {
               href="/admin/problems"
               className="border border-black bg-blue-900 rounded-md p-2"
             >
-              Back to Problems list
+              Back to Problems lists
             </Link>
             <Link
               href="/admin"
