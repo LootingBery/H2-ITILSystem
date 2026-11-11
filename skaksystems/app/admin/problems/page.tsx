@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import DeleteProblemButton from "./DeleteProblemButton";
 
 interface Problems {
   ID: number;
@@ -29,7 +30,7 @@ async function ProblemsList() {
   if (Problems.length === 0) {
     return (
       <div className="text-center font-semibold text-5xl mt-20 text-white/80">
-        No problems found. it would be the first time!
+        No problems found.
       </div>
     );
   }
@@ -48,15 +49,17 @@ async function ProblemsList() {
 
           <p className="text-sm text-slate-400">{Problems.Description}</p>
           <br />
-          <Link
-            href={`/admin/problems/${Problems.ID}`}
-            className="border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center hover:cursor-pointer"
-          >
-            View Problems
-          </Link>
-          {/* 
-          {Number(level) >= 3 && <DeleteProblemButton Problem={Problems.ID} />}
-          */}
+          <div className="flex justify-between gap-2">
+            <Link
+              href={`/admin/problems/${Problems.ID}`}
+              className="border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center hover:cursor-pointer"
+            >
+              View Problems
+            </Link>
+            {Number(level) >= 3 && (
+              <DeleteProblemButton problemId={Problems.ID} />
+            )}
+          </div>
         </div>
       ))}
     </div>
