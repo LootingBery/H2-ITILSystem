@@ -67,3 +67,21 @@ export async function createSLA(formData: FormData) {
 
   revalidatePath("/admin/sla/add");
 }
+
+export async function createproblemlist(formData: FormData) {
+  const Title = formData.get("Title")?.toString();
+  const Description = formData.get("Description")?.toString();
+  if (!Title || !Description) {
+    throw new Error("All problem list fields are required");
+  }
+  if (!Title) {
+    throw new Error("Title is required");
+  }
+  if (!Description) {
+    throw new Error("Description is required");
+  }
+  await query("INSERT INTO Problems (Title, Description) VALUES (?, ?)", [
+    Title,
+    Description,
+  ]);
+}

@@ -34,7 +34,7 @@ async function ProblemsList() {
     );
   }
   return (
-    <div className="grid relative">
+    <div className="grid relative gap-2">
       {Problems.map((Problems) => (
         <div
           key={Problems.ID}
@@ -77,14 +77,12 @@ export default async function Page() {
         <div className="mb-4 flex flex-row justify-between items-center">
           <h1 className="text-2xl font-bold">Problems</h1>
           <div className="flex gap-2">
-            {/*
             <Link
               href="/admin/problems/add"
               className="border border-black bg-blue-900 rounded-md p-2"
             >
               Add Problem List
             </Link>
-            */}
             <Link
               href="/admin"
               className="border border-black bg-blue-900 rounded-md p-2"
