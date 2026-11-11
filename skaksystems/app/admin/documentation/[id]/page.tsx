@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
-import ProblemDropdown from "../../tickets/[id]/TicketProblemSection";
 import Link from "next/link";
+import ClosedTicketProblemSection from "../ClosedTicketProblemSection";
 
 interface ClosedTickets {
   ID: number;
@@ -18,6 +18,12 @@ interface ClosedTickets {
   ClosedByForename: string;
   ClosedBySurname: string;
   ClosedAt: Date | string;
+  ProblemID: number | null;
+}
+
+interface Problem {
+  ID: number;
+  Title: string;
 }
 export const instant = false;
 
@@ -61,6 +67,9 @@ async function ClosedTicketDetails({
     ON ClosedTickets.ClosedBy = Employees.ID
     WHERE ClosedTickets.ID = ?`,
     [id],
+  );
+  const problems = await query<Problem[]>(
+    "SELECT ID, Title FROM Problems ORDER BY Title",
   );
   const closedTicket = closedTickets[0];
 
@@ -121,9 +130,11 @@ async function ClosedTicketDetails({
           {closedTicket.ClosedByForename} {closedTicket.ClosedBySurname}
         </p>
       </div>
-      <button className="inline-block mt-4 p-2 bg-blue-900 rounded">
-        Add to problem
-      </button>
+      <ClosedTicketProblemSection
+        ticketId={closedTicket.ID}
+        problems={problems}
+        initialProblemId={closedTicket.ProblemID}
+      />
     </main>
   );
 }
