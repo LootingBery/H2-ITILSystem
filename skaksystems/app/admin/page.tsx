@@ -9,7 +9,6 @@ import {
   ChessBishop,
   ChessKnight,
   ChessKing,
-  ChessPawn,
   ChessQueen,
   TicketCheck,
   Ticket,
@@ -76,7 +75,7 @@ export default async function Page() {
             href="/admin/problems"
             className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653]  text-white max-md:justify-center max-md:px-1`}
           >
-            <ChessQueen size={15} className="text-blue-400" /> Problems
+            <ChessKnight size={15} className="text-blue-400" /> Problems
           </a>
           <a
             href="/admin/employees"
@@ -89,7 +88,7 @@ export default async function Page() {
               href="/admin/sla"
               className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
             >
-              <ChessKnight size={15} className="text-blue-400" /> SLA
+              <ChessQueen size={15} className="text-blue-400" /> SLA
             </a>
           )}
         </nav>
