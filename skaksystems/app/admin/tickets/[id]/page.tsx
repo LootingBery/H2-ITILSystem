@@ -16,6 +16,7 @@ interface Ticket {
   Phone: string;
   Priority: number;
   AssignedLevel: number;
+  ProblemID: number | null;
 }
 
 interface Problem {
