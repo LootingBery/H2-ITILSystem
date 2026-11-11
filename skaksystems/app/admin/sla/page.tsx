@@ -36,14 +36,12 @@ async function GetSLA({ level }: { level: number }) {
           <p className="font-semibold text-lg">{sla.Title}</p>
           <p className="text-sm text-white/80">{sla.Description}</p>
           <p className="text-sm text-white/80">Punishment: {sla.Punishment}</p>
-          {Number(level) >= 3 && (
-            <Link
-              href={`/admin/sla/${sla.ID}`}
-              className="inline-block mt-3 border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center"
-            >
-              Edit SLA
-            </Link>
-          )}
+          <Link
+            href={`/admin/sla/${sla.ID}`}
+            className="inline-block mt-3 border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center"
+          >
+            Edit SLA
+          </Link>
         </div>
       ))}
     </div>
@@ -63,6 +61,10 @@ export default async function page() {
     const Level = rows as { Level: string }[];
 
     level = Level[0]?.Level ?? "";
+  }
+  const levelNum = Number(level);
+  if (levelNum < 3) {
+    redirect("/admin");
   }
 
   if (!session) {
