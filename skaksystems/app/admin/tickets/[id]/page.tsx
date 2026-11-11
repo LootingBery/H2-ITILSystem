@@ -3,10 +3,9 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getSession } from "@/app/lib/session";
 import { Suspense } from "react";
-import CloseTicketForm from "./CloseTicketForm";
 import ForwardTicketForm from "./ForwardTicketForm";
 import ForwardTicketHistory from "./ForwardTicketHistory";
-import PriorityDropdown from "./PriorityDropdown";
+import TicketProblemSection from "./TicketProblemSection";
 
 interface Ticket {
   ID: number;
@@ -17,6 +16,11 @@ interface Ticket {
   Phone: string;
   Priority: number;
   AssignedLevel: number;
+}
+
+interface Problem {
+  ID: number;
+  Title: string;
 }
 
 export const instant = false;
@@ -49,21 +53,15 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
   const tickets = await query<Ticket[]>("SELECT * FROM Tickets WHERE ID = ?", [
     id,
   ]);
+  const problems = await query<Problem[]>(
+    "SELECT ID, Title FROM Problems ORDER BY Title",
+  );
 
   const ticket = tickets[0];
 
   if (!ticket) {
     notFound();
   }
-  let ticketpreority = "";
-  if (ticket.Priority == 1) {
-    ticketpreority = "Minimally";
-  } else if (ticket.Priority == 2) {
-    ticketpreority = "Important";
-  } else if (ticket.Priority == 3) {
-    ticketpreority = "Critical";
-  }
-
   return (
     <main className="p-8 min-h-screen bg-slate-900 text-white scrollbar-none">
       <h1 className="text-2xl font-bold mb-4">Ticket: {ticket.ID}</h1>
@@ -102,16 +100,11 @@ async function TicketDetails({ params }: { params: Promise<{ id: string }> }) {
           <span className="font-semibold text-blue-400">Forwarded level:</span>{" "}
           {ticket.AssignedLevel}
         </p>
-        <div className="flex items-center justify-between">
-          <p>
-            <span className="font-semibold text-blue-400">Priority:</span>{" "}
-            {ticketpreority}
-          </p>
-
-          <PriorityDropdown ticketId={ticket.ID} priority={ticket.Priority} />
-        </div>
-
-        <CloseTicketForm ticketId={ticket.ID} />
+        <TicketProblemSection
+          ticketId={ticket.ID}
+          priority={ticket.Priority}
+          problems={problems}
+        />
       </div>
       <Link
         href="/admin/tickets"

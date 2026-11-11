@@ -3,7 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function CloseTicketForm({ ticketId }: { ticketId: number }) {
+export default function CloseTicketForm({
+  ticketId,
+  problemId,
+}: {
+  ticketId: number;
+  problemId: number | null;
+}) {
   const [SolvedDescription, setSolvedDescription] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
@@ -18,6 +24,7 @@ export default function CloseTicketForm({ ticketId }: { ticketId: number }) {
       },
       body: JSON.stringify({
         SolvedDescription: SolvedDescription,
+        ProblemID: problemId,
       }),
     });
 

@@ -28,13 +28,42 @@ export async function POST(
 
   const body = await request.json();
 
-  const { SolvedDescription } = body;
+  const { SolvedDescription, ProblemID: rawProblemID } = body;
 
   if (!SolvedDescription || !SolvedDescription.trim()) {
     return NextResponse.json(
       { error: "Please describe how the problem was solved" },
       { status: 400 },
     );
+  }
+
+  const problemId =
+    rawProblemID === null || rawProblemID === undefined || rawProblemID === ""
+      ? null
+      : Number(rawProblemID);
+
+  if (
+    problemId !== null &&
+    (!Number.isInteger(problemId) || problemId <= 0)
+  ) {
+    return NextResponse.json(
+      { error: "Please select a valid problem" },
+      { status: 400 },
+    );
+  }
+
+  if (problemId !== null) {
+    const [problemRows] = await pool.execute(
+      "SELECT ID FROM Problems WHERE ID = ?",
+      [problemId],
+    );
+
+    if ((problemRows as { ID: number }[]).length === 0) {
+      return NextResponse.json(
+        { error: "Selected problem was not found" },
+        { status: 400 },
+      );
+    }
   }
 
   const [rows] = await pool.execute("SELECT * FROM Tickets WHERE ID = ?", [id]);
@@ -53,8 +82,8 @@ export async function POST(
 
     await connection.execute(
       `INSERT INTO ClosedTickets
-      (ID, Title, Description, Forename, Mail, Phone, SolvedDescription, ClosedBy, ClosedAt)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`,
+      (ID, Title, Description, Forename, Mail, Phone, ProblemID, SolvedDescription, ClosedBy, ClosedAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`,
       [
         ticket.ID,
         ticket.Title,
@@ -62,6 +91,7 @@ export async function POST(
         ticket.Forename,
         ticket.Mail,
         ticket.Phone,
+        problemId,
         SolvedDescription,
         session.employeeId,
       ],

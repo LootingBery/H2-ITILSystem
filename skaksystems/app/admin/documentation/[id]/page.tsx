@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
+import ProblemDropdown from "../../tickets/[id]/TicketProblemSection";
 import Link from "next/link";
 
 interface ClosedTickets {
