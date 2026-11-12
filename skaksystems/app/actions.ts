@@ -2,22 +2,53 @@
 
 import { query } from "@/app/db";
 import { revalidatePath } from "next/cache";
+import { z } from "zod"; // Email validation library
 import bcrypt from "bcrypt";
 
+const ticketSchema = z.object({
+  Title: z.string().trim().min(1, "Title is required"),
+  Description: z.string().trim().min(1, "Description is required"),
+  Forename: z.string().trim().min(1, "Forename is required"),
+  Mail: z
+    .string()
+    .trim()
+    .min(1, "Email is required")
+    .email("Please enter a valid email address")
+    .toLowerCase(),
+  Phone: z.string().trim().optional(),
+});
+
 export async function createTicket(formData: FormData) {
-  const Title = formData.get("Title");
-  const Description = formData.get("Description");
-  const Forename = formData.get("Forename");
-  const Mail = formData.get("Mail");
-  const Phone = formData.get("Phone");
-  const Priority = formData.get("Priority");
+  const validated = ticketSchema.safeParse({
+    Title: formData.get("Title"),
+    Description: formData.get("Description"),
+    Forename: formData.get("Forename"),
+    Mail: formData.get("Mail"),
+    Phone: formData.get("Phone"),
+  });
 
-  await query(
-    "INSERT INTO Tickets (Title, Description, Forename, Mail, Phone, Priority) VALUES (?, ?, ?, ?, ?, ?)",
-    [Title, Description, Forename, Mail, Phone, 1],
-  );
+  if (!validated.success) {
+    const firstError = validated.error.issues[0]?.message || "Invalid input";
+    throw new Error(firstError);
+  }
 
-  revalidatePath("/");
+  const { Title, Description, Forename, Mail, Phone } = validated.data;
+
+  try {
+    await query(
+      "INSERT INTO Tickets (Title, Description, Forename, Mail, Phone, Priority) VALUES (?, ?, ?, ?, ?, ?)",
+      [Title, Description, Forename, Mail, Phone, 1],
+    );
+
+    revalidatePath("/");
+    return { success: true };
+  } catch (err) {
+    console.error("Database error:", err);
+    return {
+      success: false,
+      error: "Database error. Please try again later.",
+    };
+  }
 }
 export async function createEmployee(formData: FormData) {
   const Forename = formData.get("Forename")?.toString();
