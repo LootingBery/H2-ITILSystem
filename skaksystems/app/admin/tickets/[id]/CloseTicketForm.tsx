@@ -40,12 +40,12 @@ export default function CloseTicketForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="SolvedDescription">Problem Solved Description</label>
+      <label htmlFor="SolvedDescription">Ticket Solved Description</label>
       <textarea
         id="SolvedDescription"
         value={SolvedDescription}
         onChange={(e) => setSolvedDescription(e.target.value)}
-        placeholder="How did you solve the problem?"
+        placeholder="How did you solve the ticket?"
         rows={6}
         required
         className="mt-1 block w-full resize-y rounded-md border border-slate-600 bg-slate-700 p-3 text-white outline-none focus:border-blue-400"

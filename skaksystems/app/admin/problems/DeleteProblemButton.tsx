@@ -25,14 +25,14 @@ export default function DeleteProblemButton({
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Could not delete ticket");
+        throw new Error(data.error || "Could not delete problem");
       }
 
       router.refresh();
     } catch (error) {
-      console.error("Error deleting ticket:", error);
+      console.error("Error deleting problem:", error);
       window.alert(
-        error instanceof Error ? error.message : "Could not delete ticket",
+        error instanceof Error ? error.message : "Could not delete problem",
       );
       setIsDeleting(false);
     }
@@ -45,7 +45,7 @@ export default function DeleteProblemButton({
       disabled={isDeleting}
       className="relative border border-black bg-red-900 rounded-md p-2 hover:bg-red-700 text-center hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
     >
-      {isDeleting ? "Deleting..." : "Delete Ticket"}
+      {isDeleting ? "Deleting..." : "Delete problem"}
     </button>
   );
 }

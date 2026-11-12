@@ -2,12 +2,19 @@ import { pool, query } from "@/app/db";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getSession } from "@/app/lib/session";
-import { Suspense } from "react";
+import { Suspense, type ComponentType } from "react";
+import CloseProblemForm from "./CloseProblemForm";
+import EditProblemSolvedDescription from "./EidtProblemSolvedDesciption";
+
+const ProblemForm = CloseProblemForm as unknown as ComponentType<{
+  problemId: number | null;
+}>;
 
 interface problems {
   ID: number;
   Title: string;
   Description: string;
+  SolvedDescription: string;
 }
 
 interface ClosedTickets {
@@ -83,46 +90,55 @@ async function ProblemDetails({
           Back to problems
         </Link>
       </div>
-
       <div className="bg-slate-800 p-4 rounded border border-slate-700">
+        <div className="bg-slate-800 p-4 rounded border border-slate-700">
+          <h2 className="text-xl font-semibold mb-2">Closed Tickets</h2>
+        </div>
+        <br />
         <p>
           <strong className="text-blue-400">Title:</strong> {problem.Title}
         </p>
-
         <p>
           <strong className="text-blue-400">Description:</strong>{" "}
           {problem.Description}
         </p>
-      </div>
-      <div className="bg-slate-800 p-4 rounded border border-slate-700 mt-4">
-        <h2 className="text-xl font-semibold mb-2">Tickets</h2>
-        {ClosedTickets.length === 0 ? (
-          <p>No closed tickets found for this problem.</p>
-        ) : (
-          <div className="grid gap-2">
-            {ClosedTickets.map((ticket) => (
-              <div
-                key={ticket.ID}
-                className="rounded border border-slate-700 bg-slate-800 p-4"
-              >
-                <p className="text-sm text-gray-400">
-                  Closed Tickets ID: {ticket.ID}
-                </p>
-
-                <p className="text-lg font-semibold">{ticket.Title}</p>
-
-                <p className="text-white/80">{ticket.SolvedDescription}</p>
-
-                <Link
-                  href={`/admin/problems/${problem.ID}/${ticket.ID}`}
-                  className="mt-3 inline-block rounded-md border border-black bg-blue-900 p-2 text-center hover:bg-blue-700"
+        <br />
+        <div className="justify-between flex flex-row items-center">
+          <CloseProblemForm
+            problemId={problem.ID}
+            solvedDescription={problem.SolvedDescription}
+          />
+          <EditProblemSolvedDescription
+            problemId={problem.ID}
+            solvedDescription={problem.SolvedDescription}
+          />
+        </div>
+        <br />
+        <div className="bg-slate-800 p-4 rounded border border-slate-700 mt-4">
+          <h2 className="text-xl font-semibold mb-2">Tickets</h2>
+          {ClosedTickets.length === 0 ? (
+            <p>No closed tickets found for this problem.</p>
+          ) : (
+            <div className="grid gap-2">
+              {ClosedTickets.map((ticket) => (
+                <div
+                  key={ticket.ID}
+                  className="rounded border border-slate-700 bg-slate-800 p-4"
                 >
-                  View Details
-                </Link>
-              </div>
-            ))}
-          </div>
-        )}
+                  Closed Tickets ID: {ticket.ID}
+                  <p className="text-lg font-semibold">{ticket.Title}</p>
+                  <p className="text-white/80">{ticket.SolvedDescription}</p>
+                  <Link
+                    href={`/admin/problems/${problem.ID}/${ticket.ID}`}
+                    className="mt-3 inline-block rounded-md bg-blue-900 p-2 text-center hover:bg-blue-700"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

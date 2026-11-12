@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import DeleteProblemButton from "./DeleteProblemButton";
+import Navbar from "../navbar";
 
 interface Problems {
   ID: number;
@@ -89,30 +90,35 @@ export default async function Page() {
 
   return (
     <main>
-      <div className="p-4 text-white bg-slate-900 min-h-screen">
-        <div className="mb-4 flex flex-row justify-between items-center">
-          <h1 className="text-2xl font-bold">Problems</h1>
-          <div className="flex gap-2">
-            <Link
-              href="/admin/problems/add"
-              className="border border-black bg-blue-900 rounded-md p-2"
-            >
-              Add Problem List
-            </Link>
-            <Link
-              href="/admin"
-              className="border border-black bg-blue-900 rounded-md p-2"
-            >
-              Back to admin
-            </Link>
+      <Navbar />
+      <div className="ml-[260px] px-6 pb-10 pt-[77px] max-md:ml-[65px] max-md:px-4">
+        <div className="p-4 text-white bg-slate-900 min-h-screen">
+          <div className="mb-4 flex flex-row justify-between items-center">
+            <h1 className="text-2xl font-bold">Problems</h1>
+            <div className="flex gap-2">
+              <Link
+                href="/admin/problems/add"
+                className="border border-black bg-blue-900 rounded-md p-2"
+              >
+                Add Problem List
+              </Link>
+              <Link
+                href="/admin"
+                className="border border-black bg-blue-900 rounded-md p-2"
+              >
+                Back to admin
+              </Link>
+            </div>
           </div>
+
+          <div className="mb-6 h-px w-full bg-blue-400/70" />
+
+          <Suspense
+            fallback={<p className="text-white">Loading Problems...</p>}
+          >
+            <ProblemsList />
+          </Suspense>
         </div>
-
-        <div className="mb-6 h-px w-full bg-blue-400/70" />
-
-        <Suspense fallback={<p className="text-white">Loading Problems...</p>}>
-          <ProblemsList />
-        </Suspense>
       </div>
     </main>
   );

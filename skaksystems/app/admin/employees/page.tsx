@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { pool } from "@/app/db";
 import DeleteEmployeeButton from "./DeleteEmployeeButton";
 import Link from "next/link";
+import Navbar from "../navbar";
 
 interface Employees {
   ID: number;
@@ -96,35 +97,40 @@ export default async function Page() {
   }
   return (
     <main>
-      <div className="p-4 text-white bg-slate-900 min-h-screen">
-        <div className=" relative mb-4 flex flex-row items-center">
-          <h1 className="text-2xl font-bold">Employees</h1>
-          <div className="absolute right-0 flex gap-2">
-            {Number(level) >= 3 && (
+      <Navbar />
+      <div className="ml-[260px] px-6 pb-10 pt-[77px] max-md:ml-[65px] max-md:px-4">
+        <div className="p-4 text-white bg-slate-900 min-h-screen">
+          <div className=" relative mb-4 flex flex-row items-center">
+            <h1 className="text-2xl font-bold">Employees</h1>
+            <div className="absolute right-0 flex gap-2">
+              {Number(level) >= 3 && (
+                <a
+                  href="/admin/employees/add"
+                  className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
+                >
+                  Add Employee
+                </a>
+              )}
               <a
-                href="/admin/employees/add"
+                href="/admin"
                 className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
               >
-                Add Employee
+                Back to admin
               </a>
-            )}
-            <a
-              href="/admin"
-              className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
-            >
-              Back to admin
-            </a>
+            </div>
           </div>
+
+          <div className="mb-6 h-px w-full bg-blue-400/70" />
+
+          <Suspense
+            fallback={<p className="text-white">Loading employees...</p>}
+          >
+            <EmployeesList
+              level={level}
+              currentEmployeeId={session?.employeeId}
+            />
+          </Suspense>
         </div>
-
-        <div className="mb-6 h-px w-full bg-blue-400/70" />
-
-        <Suspense fallback={<p className="text-white">Loading employees...</p>}>
-          <EmployeesList
-            level={level}
-            currentEmployeeId={session?.employeeId}
-          />
-        </Suspense>
       </div>
     </main>
   );

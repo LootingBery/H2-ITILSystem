@@ -4,6 +4,7 @@ import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import Navbar from "../navbar";
 
 interface ClosedTickets {
   ID: number;
@@ -75,31 +76,34 @@ export default async function Page({
 
   return (
     <main className="min-h-screen bg-slate-900 p-4 text-white">
-      <div className="relative mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Closed Tickets</h1>
+      <Navbar />
+      <div className="ml-[260px] px-6 pb-10 pt-[77px] max-md:ml-[65px] max-md:px-4">
+        <div className="relative mb-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold">Closed Tickets</h1>
 
-        <Link
-          href="/admin"
-          className="rounded-md border border-black bg-blue-900 p-2 text-center"
+          <Link
+            href="/admin"
+            className="rounded-md border border-black bg-blue-900 p-2 text-center"
+          >
+            Back to admin
+          </Link>
+        </div>
+
+        <div className="mb-6 h-px w-full bg-blue-400/70" />
+
+        <div className="mb-5">
+          <Suspense fallback={<div className="h-12" />}>
+            <SearchBar placeholder="Search closed tickets..." />
+          </Suspense>
+        </div>
+
+        <Suspense
+          key={search}
+          fallback={<p className="text-white">Loading Closed Tickets...</p>}
         >
-          Back to admin
-        </Link>
-      </div>
-
-      <div className="mb-6 h-px w-full bg-blue-400/70" />
-
-      <div className="mb-5">
-        <Suspense fallback={<div className="h-12" />}>
-          <SearchBar placeholder="Search closed tickets..." />
+          <ClosedTicketsList search={search} />
         </Suspense>
       </div>
-
-      <Suspense
-        key={search}
-        fallback={<p className="text-white">Loading Closed Tickets...</p>}
-      >
-        <ClosedTicketsList search={search} />
-      </Suspense>
     </main>
   );
 }

@@ -3,6 +3,7 @@ import { getSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
+import Navbar from "../navbar";
 
 export const instant = false;
 
@@ -36,12 +37,14 @@ async function GetSLA({ level }: { level: number }) {
           <p className="font-semibold text-lg">{sla.Title}</p>
           <p className="text-sm text-white/80">{sla.Description}</p>
           <p className="text-sm text-white/80">Punishment: {sla.Punishment}</p>
-          <Link
-            href={`/admin/sla/${sla.ID}`}
-            className="inline-block mt-3 border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center"
-          >
-            Edit SLA
-          </Link>
+          {Number(level) >= 3 && (
+            <Link
+              href={`/admin/sla/${sla.ID}`}
+              className="inline-block mt-3 border border-black bg-blue-900 rounded-md p-2 hover:bg-blue-700 text-center"
+            >
+              Edit SLA
+            </Link>
+          )}
         </div>
       ))}
     </div>
@@ -63,43 +66,45 @@ export default async function page() {
     level = Level[0]?.Level ?? "";
   }
   const levelNum = Number(level);
-  if (levelNum < 3) {
-    redirect("/admin");
-  }
 
   if (!session) {
     redirect("/login");
   }
   return (
     <main>
-      <div className="p-4 text-white bg-slate-900 min-h-screen">
-        <div className=" relative mb-4 flex flex-row items-center">
-          <h1 className="text-2xl font-bold">SLA | Service Level Agreement</h1>
-          <div className="absolute right-0 flex gap-2">
-            {Number(level) >= 3 && (
+      <Navbar />
+      <div className="ml-[260px] px-6 pb-10 pt-[77px] max-md:ml-[65px] max-md:px-4">
+        <div className="p-4 text-white bg-slate-900 min-h-screen">
+          <div className=" relative mb-4 flex flex-row items-center">
+            <h1 className="text-2xl font-bold">
+              SLA | Service Level Agreement
+            </h1>
+            <div className="absolute right-0 flex gap-2">
+              {Number(level) >= 3 && (
+                <a
+                  href="/admin/sla/add"
+                  className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
+                >
+                  Add Service Level Agreement
+                </a>
+              )}
               <a
-                href="/admin/sla/add"
+                href="/admin"
                 className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
               >
-                Add Service Level Agreement
+                Back to admin
               </a>
-            )}
-            <a
-              href="/admin"
-              className="border border-black bg-blue-900 rounded-md p-2 hover:cursor-pointer text-center"
-            >
-              Back to admin
-            </a>
+            </div>
           </div>
+          <div className="mb-6 h-px w-full bg-blue-400/70" />
+          <Suspense
+            fallback={
+              <p className="text-white">Loading Service Level Agreements...</p>
+            }
+          >
+            <GetSLA level={Number(level)} />
+          </Suspense>
         </div>
-        <div className="mb-6 h-px w-full bg-blue-400/70" />
-        <Suspense
-          fallback={
-            <p className="text-white">Loading Service Level Agreements...</p>
-          }
-        >
-          <GetSLA level={Number(level)} />
-        </Suspense>
       </div>
     </main>
   );

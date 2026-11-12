@@ -78,9 +78,6 @@ export default function ForwardTicketForm({
 
           <div>
             <h2 className="font-semibold text-white">Forward Ticket</h2>
-            <p className="text-sm text-slate-400">
-              Forward this ticket to another level
-            </p>
           </div>
         </div>
 

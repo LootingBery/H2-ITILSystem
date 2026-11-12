@@ -52,47 +52,6 @@ export default async function Page() {
   return (
     <main className="min-h-screen bg-[#101116] text-white">
       <Navbar />
-      <aside className="fixed bottom-0 left-0 top-[61px] z-40 w-[260px] border-r border-[#252630] bg-[#191a22] px-2 py-3 max-md:w-[65px]">
-        <p className="mb-3 px-1 text-[11px] text-[#9297aa] max-md:text-center">
-          MENU
-        </p>
-
-        <nav className="space-y-2">
-          <a
-            href="/admin/documentation"
-            className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
-          >
-            <ChessRook size={15} className="text-blue-400" />
-            Documentation
-          </a>
-          <a
-            href="/admin/tickets"
-            className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653]  text-white max-md:justify-center max-md:px-1`}
-          >
-            <ChessBishop size={15} className="text-blue-400" /> Tickets
-          </a>
-          <a
-            href="/admin/problems"
-            className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653]  text-white max-md:justify-center max-md:px-1`}
-          >
-            <ChessKnight size={15} className="text-blue-400" /> Problems
-          </a>
-          <a
-            href="/admin/employees"
-            className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
-          >
-            <ChessKing size={15} className="text-blue-400" /> Employees
-          </a>
-          {Number(level) >= 3 && (
-            <a
-              href="/admin/sla"
-              className={`text-lg flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left "bg-[#342653] text-white max-md:justify-center max-md:px-1`}
-            >
-              <ChessQueen size={15} className="text-blue-400" /> SLA
-            </a>
-          )}
-        </nav>
-      </aside>
       <div className="ml-[260px] px-6 pb-10 pt-[77px] max-md:ml-[65px] max-md:px-4">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
