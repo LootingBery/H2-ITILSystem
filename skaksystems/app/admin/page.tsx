@@ -4,17 +4,7 @@ import { redirect } from "next/navigation";
 import { pool } from "@/app/db";
 import Navbar from "./navbar";
 
-import {
-  ChessRook,
-  ChessBishop,
-  ChessKnight,
-  ChessKing,
-  ChessQueen,
-  TicketCheck,
-  Ticket,
-  SquarePen,
-  User,
-} from "lucide-react";
+import { TicketCheck, Ticket, SquarePen, User } from "lucide-react";
 
 export const instant = false;
 export default async function Page() {
