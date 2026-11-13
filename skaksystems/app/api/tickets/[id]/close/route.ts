@@ -42,10 +42,7 @@ export async function POST(
       ? null
       : Number(rawProblemID);
 
-  if (
-    problemId !== null &&
-    (!Number.isInteger(problemId) || problemId <= 0)
-  ) {
+  if (problemId !== null && (!Number.isInteger(problemId) || problemId <= 0)) {
     return NextResponse.json(
       { error: "Please select a valid problem" },
       { status: 400 },
